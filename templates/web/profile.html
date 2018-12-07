@@ -1,0 +1,35 @@
+{% extends 'web/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+{% block content %}
+    <div>
+        {% for item in find %}
+        <div>
+            <span>{{ item.tiem }}<br><small>{{ item.time }}</small></span>
+            <div>
+                <h2><a href="{% url 'web:detail' item.id %}">{{ item.title }}</a> </h2>
+                <div>
+                    <h6>{{ item.time }}</h6>
+                </div>
+            </div>
+            <div>
+                <p>{{ item.abstract }}</p>
+            </div>
+            <div>
+                <h6 align="right">{{ item.type }}</h6>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+</body>
+</html>

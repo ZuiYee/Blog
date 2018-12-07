@@ -1,0 +1,33 @@
+{% extends 'web/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+{% block content %}
+    <div>
+        <div>
+            <span>{{ find.tiem }}<br><small>{{ find.time }}</small></span>
+            <div>
+                <h2>{{ find.title }}</h2>
+                <div>
+                    <h6>{{ find.time }}</h6>
+                </div>
+            </div>
+            <div>
+                <p>{{ find.content }}</p>
+            </div>
+            <div>
+                <h6 align="right">{{ find.type }}</h6>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>

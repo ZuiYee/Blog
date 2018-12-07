@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{% url 'web:profile' %}">
+                回到首页
+            </a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                {% block content %}
+
+                {% endblock %}
+            </div>
+            <div class="col-sm-4">
+                <div class="sidebar">
+                    <div class="widget clearfix">
+                        <form action="search" method="GET" class="search-form">
+                            <input name="s" type="text" class="search" placeholder="Seach..">
+                            <input type="submit" class="search-label-icon" onchange="getValue()" value=" 搜索">
+                        </form>
+                    </div>
+                    <div class="related-widget-wrapper">
+                        <h5>寄语</h5>
+                        <div class="text">
+                            <p>
+                                人之所以快乐，在于豁达;人之所以成熟，在于看透;人之所以放弃，在于选择;人之所以宽容，在于理解;人之所以充实，在于过程;人之所以成功，在于勤奋;人之所以幸福，在于知足。
+                            </p>
+                        </div>
+                    </div>
+                    <div clas="widget">
+                        <h5>目录</h5>
+                        <ul>
+                            <li>
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="type" value="python"/>
+                                    <input type="submit" value="python">
+                                </form>
+                            </li>
+                            <li>
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="type" value="c"/>
+                                    <input type="submit" value="c">
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
