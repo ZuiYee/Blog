@@ -28,7 +28,8 @@
                 <div class="sidebar">
                     <div class="widget clearfix">
                         <form action="search" method="GET" class="search-form">
-                            <input name="s" type="text" class="search" placeholder="Seach..">
+                            {% csrf_token %}
+                            <input name="s" type="text" class="search" placeholder="Search..">
                             <input type="submit" class="search-label-icon" onchange="getValue()" value=" 搜索">
                         </form>
                     </div>
@@ -43,20 +44,15 @@
                     <div clas="widget">
                         <h5>目录</h5>
                         <ul>
+                            {% for item in allType %}
                             <li>
                                 <form action="" method="post">
                                     {% csrf_token %}
-                                    <input type="hidden" name="type" value="python"/>
-                                    <input type="submit" value="python">
+                                    <input type="hidden" name="type" value="{{ item }}"/>
+                                    <input type="submit" value="{{ item }}">
                                 </form>
                             </li>
-                            <li>
-                                <form action="" method="post">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="type" value="c"/>
-                                    <input type="submit" value="c">
-                                </form>
-                            </li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
