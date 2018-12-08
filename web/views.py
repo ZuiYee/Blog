@@ -3,8 +3,8 @@ from .models import Article
 from django.utils.safestring import mark_safe
 find = None
 allType = []
-Month = {'1': "Jan.", '2': "Feb.", '3': "Mar.", '4': "Apr.", '5': "May.", '6': "Jun.", '7': "Jul.",
-                '8': "Aug.", '9': "Sep.", '10': "Oct.", '11': "Nov.", '12': "Dec."}
+Month = {'1': "Jan", '2': "Feb", '3': "Mar", '4': "Apr", '5': "May", '6': "Jun", '7': "Jul",
+                '8': "Aug", '9': "Sep", '10': "Oct", '11': "Nov", '12': "Dec"}
 
 
 def summary():
@@ -30,8 +30,11 @@ def Paging():
     count, y = divmod(dataLen, 5)
     if y:
         count += 1
-    for i in range(1, count+1):
-        temp = '<a href="/profile/?p=%s">%s</a>'%(i, i)
+    for i in range(1, count + 1):
+        if i == 1:
+            temp = '<li><a class="active" href="/profile/?p=%s">%s</a></li>' % (i, i)
+        else:
+            temp = '<li><a href="/profile/?p=%s">%s</a></li>' % (i, i)
         pageList.append(temp)
 
     pageStr = "".join(pageList)
@@ -85,7 +88,10 @@ def profile(request):
             if y:
                 count += 1
             for i in range(1, count + 1):
-                temp = '<a href="/profile/?p=%s">%s</a>' % (i, i)
+                if i == 1:
+                    temp = '<li><a class="active" href="/profile/?p=%s">%s</a></li>' % (i, i)
+                else:
+                    temp = '<li><a href="/profile/?p=%s">%s</a></li>' % (i, i)
                 pageList.append(temp)
 
             pageStr = "".join(pageList)

@@ -1,10 +1,12 @@
 {% extends 'web/base.html' %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Blog</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -13,24 +15,28 @@
 {% block content %}
     <div>
         {% for item in find %}
-        <div>
-            <span>{{ item.mon }}<br><small>{{ item.day }}</small></span>
-            <div>
+        <div class="post image">
+            <span class="date">{{ item.mon }}<br><small>{{ item.day }}</small></span>
+            <div class="post-title">
                 <h2><a href="{% url 'web:detail' item.id %}">{{ item.title }}</a> </h2>
-                <div>
+                <div class="post-meta">
                     <h6>{{ item.time }}</h6>
                 </div>
             </div>
-            <div>
+            <div class="post-body">
                 <p>{{ item.abstract }}</p>
             </div>
-            <div>
+            <div class="post-meta">
                 <h6 align="right">{{ item.type }}</h6>
             </div>
         </div>
         {% endfor %}
     </div>
-    <div>{{ pageStr }}</div>
+    <ul class="pagination page">
+        <li><a href="#">&laquo;</a></li>
+        {{ pageStr }}
+        <li><a href="#">&raquo;</a></li>
+    </ul>
 {% endblock %}
 </body>
 </html>

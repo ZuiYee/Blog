@@ -119,6 +119,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = (
+    ('css', os.path.join(STATIC_ROOT, 'css').replace('\\', '/')),
+    ('images', os.path.join(STATIC_ROOT, 'images').replace('\\', '/')),
+)
 
 # DEBUG = False
 ALLOWED_HOSTS = ['47.100.118.242', '127.0.0.1', 'localhost ', 'zuiyee.online']
