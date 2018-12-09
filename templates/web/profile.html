@@ -4,7 +4,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Blog</title>
+    <title>
+        {% block title %}
+        Blog
+        {% endblock %}
+    </title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 
@@ -33,9 +37,7 @@
         {% endfor %}
     </div>
     <ul class="pagination page">
-        <li><a href="#">&laquo;</a></li>
         {{ pageStr }}
-        <li><a href="#">&raquo;</a></li>
     </ul>
 {% endblock %}
 </body>

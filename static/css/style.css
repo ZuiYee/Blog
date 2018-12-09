@@ -202,7 +202,7 @@ input[type="text"],#btn1,#btn2{
 input[type="submit"]{
     padding: 0px 10px;
     height: 40px;
-    width: 100px;
+    width: 80px;
     line-height: 40px;
     position: relative;
     cursor: pointer;
@@ -241,5 +241,19 @@ footer {
 
 .page{
 	color: #93ffe2;
-	background: #1f48ff;
+}
+
+.page .active{
+    background: #ffd8cc;
+}
+
+input.jump {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    position: relative;
+    padding: 6px 12px;
+    width: 40px;
+    line-height: 1.42857143;
+    border: 1px solid #ddd;
+    height: 35px;
 }

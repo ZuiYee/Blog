@@ -3,7 +3,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Detail</title>
+    <title>
+        {% block title %}
+
+        {% endblock %}
+    </title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <!-- Latest compiled JavaScript -->
@@ -34,6 +38,7 @@
                         <div class="widget">
                             <form action="search" method="GET" class="search-form">
                                 {% csrf_token %}
+                                <span class="glyphicon glyphicon-search"></span>
                                 <input name="s" type="text" class="search" placeholder="Search..">
                                 <input type="submit" class="search-label-icon" onchange="getValue()" value=" 搜索">
                             </form>
