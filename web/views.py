@@ -12,7 +12,6 @@ def summary():
     for item in allData:
         allType.append(item.type)
     allType = sorted(set(allType), key=allType.index)
-    print(allType)
 
 
 def Paging(page=1, find=None):
@@ -52,7 +51,6 @@ def Paging(page=1, find=None):
     else:
         prev = '<li><a href="/profile/?p=%s">&laquo;</a></li>' % (page - 1)
     pageList.append(prev)
-    print(startIndex, endIndex)
     for i in range(int(startIndex), int(endIndex)):
         if i == page:
             temp = '<li><a class="active" href="/profile/?p=%s">%s</a></li>' % (i, i)
