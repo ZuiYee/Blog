@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.conf.urls import url,include
+from django.conf.urls import url, include
 from . import views
 from web.views import profile
+from spider.views import spider
 
 
 
@@ -25,5 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
     url(r'^profile/', profile, name='profile'),
-    url(r'^web/', include('web.urls'))
+    url(r'^spider/', spider, name='spider'),
+    url(r'^web/', include('web.urls')),
+    url(r'^spider/', include('spider.urls'))
 ]
