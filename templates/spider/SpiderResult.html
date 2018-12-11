@@ -6,10 +6,15 @@
 </head>
 <body>
     <div><a href="{% url 'spider:mainspider' %}">返回</a> </div>
-    <table>
-        <tbody>
-            {{ pageStr }}
-        </tbody>
-    </table>
+    {% if pageStr %}
+        <table>
+            <tbody>
+                {{ pageStr }}
+            </tbody>
+        </table>
+    {% else%}
+        <h3>账号或密码错误，请重试</h3>
+    {% endif %}
+
 </body>
 </html>
