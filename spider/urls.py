@@ -2,9 +2,9 @@ from django.conf.urls import url
 from . import views
 
 
-app_name = 'web'
+app_name = 'spider'
 
 
 urlpatterns = [
-    url(r'^spider/', views.spider, name='spider'),
+    url(r'^spider/', views.index, name='index'),
 ]
