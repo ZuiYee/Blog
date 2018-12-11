@@ -6,5 +6,5 @@ app_name = 'spider'
 
 
 urlpatterns = [
-    url(r'^spider/', views.index, name='index'),
+    url(r'^mainspider/', views.mainspider, name='mainspider'),
 ]

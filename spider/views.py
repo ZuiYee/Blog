@@ -41,7 +41,7 @@ def EducationSpider(request, username, password):
 
 
 
-def index(request):
+def mainspider(request):
     if request.method == 'POST':
         return EducationSpider(request, request.POST.get("username"), request.POST.get("password"))
     return render(request, 'spider/index.html')

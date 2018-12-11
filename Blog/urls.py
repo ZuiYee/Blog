@@ -18,7 +18,7 @@ from django.urls import path
 from django.conf.urls import url, include
 from . import views
 from web.views import profile
-from spider.views import index
+from spider.views import mainspider
 
 
 
@@ -26,7 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
     url(r'^profile/', profile, name='profile'),
-    url(r'^spider/', index, name='index'),
+    url(r'^mainspider/', mainspider, name='mainspider'),
     url(r'^web/', include('web.urls')),
     url(r'^spider/', include('spider.urls'))
 ]
