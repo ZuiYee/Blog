@@ -19,6 +19,7 @@ from django.conf.urls import url, include
 from . import views
 from web.views import profile
 from spider.views import mainspider
+from robot.views import myrobot
 
 
 
@@ -27,6 +28,8 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^profile/', profile, name='profile'),
     url(r'^mainspider/', mainspider, name='mainspider'),
+    url(r'^myrobot/', myrobot, name='myrobot'),
     url(r'^web/', include('web.urls')),
-    url(r'^spider/', include('spider.urls'))
+    url(r'^spider/', include('spider.urls')),
+    url(r'^robot/', include('robot.urls'))
 ]
