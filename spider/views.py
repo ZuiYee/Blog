@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from selenium import webdriver
+from selenium.webdriver.support.ui import Select
 from pyquery import PyQuery as pq
 from django.utils.safestring import mark_safe
+import time
 
-def TestSpider(request, username, password):
+def TestSpider1(request, username, password):
     context = {}
 
     chromeOption = webdriver.ChromeOptions()
@@ -23,13 +25,43 @@ def TestSpider(request, username, password):
     browser.find_element_by_id('password').send_keys(password)
     browser.find_element_by_id('btnLogin').click()
 
-    browser.get('http://zf.ahu.cn/cjgl/Student/CJCX/KCCJCX')
+    browser.get('http://zf.ahu.cn/ksgl/student/KSCX/KSCXIndex')
     browser.implicitly_wait(10)  # 等待网页加载
-    doc = pq(browser.page_source, parser="html")
     pageList = []
-    
+    Select(browser.find_element_by_id('XQ')).select_by_value('1')
+    time.sleep(5)
+    print(browser.page_source)
+    doc = pq(browser.page_source, parser="html")
+    items = doc('#KSCXdataTable > tbody > tr').items()
+    th = '''
+        <tr>
+            <td style="text-align: left;">选课课号</td>
+            <td style="text-align: left;">课程名称</td>
+            <td style="text-align: left;">姓名</td>
+            <td style="text-align: left;">考试时间</td>
+            <td style="text-align: left;">考试地点</td>
+            <td style="text-align: left;">考试形式</td>
+            <td style="text-align: left;">座位号</td>
+            <td style="text-align: left;">校区</td>
+        </tr>
+    '''
+    pageList.append(th)
+    for item in items:
+        pageList.append(str(item))
 
-def EducationSpider(request, username, password):
+    pageStr = "".join(pageList)
+    pageStr = mark_safe(pageStr)
+    context['pageStr'] = pageStr
+    browser.close()  # 关闭浏览器
+    return render(request, 'spider/SpiderResult.html', context)
+
+def TestSpider(request):
+    if request.method == 'POST':
+        return TestSpider1(request, request.POST.get("username"), request.POST.get("password"))
+    return render(request, 'spider/TestSpider.html')
+
+
+def EducationSpider1(request, username, password):
     context = {}
 
     chromeOption = webdriver.ChromeOptions()
@@ -65,8 +97,11 @@ def EducationSpider(request, username, password):
     return render(request, 'spider/SpiderResult.html', context)
 
 
+def EducationSpider(request):
+    if request.method == 'POST':
+        return EducationSpider1(request, request.POST.get("username"), request.POST.get("password"))
+    return render(request, 'spider/EducationSpider.html')
+
 
 def mainspider(request):
-    if request.method == 'POST':
-        return EducationSpider(request, request.POST.get("username"), request.POST.get("password"))
     return render(request, 'spider/index.html')

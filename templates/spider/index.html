@@ -6,13 +6,7 @@
 </head>
 <body>
     <div><a href="{% url 'index' %}">返回</a> </div>
-    <form action="" method="post">
-        {% csrf_token %}
-        <span>账号:</span>
-        <input type="text" name="username" value="">
-        <span>密码:</span>
-        <input type="text" name="password" value="">
-        <input type="submit" value="查询">
-    </form>
+    <div><a href="{% url 'spider:EducationSpider' %}">EducationSpider</a> </div>
+    <div><a href="{% url 'spider:TestSpider' %}">TestSpider</a> </div>
 </body>
 </html>
