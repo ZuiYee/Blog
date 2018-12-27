@@ -8,105 +8,601 @@
 
         {% endblock %}
     </title>
+
+{#    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>#}
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-responsive.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+{#    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">#}
     <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{#    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>#}
+
+    <script src="/static/js/jquery.min.js"></script>
+{#    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">#}
 </head>
-<body>
-    <div>
-        <div class="bg bg-blur"></div>
-        <div class="bb"></div>
+<body class="body-container preload">
+<!-- header -->
+<header id="mocha-head" class="header">
 
-        <nav class="top-header navbar">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="{% url 'web:profile' %}">
-                    <img alt="Brand" src="{% static 'images/logo.png' %}" width="150" class="logo-header">
-                </a>
+    <!-- Background -->
+    <div class="background-image"></div>
+
+
+    <!-- container -->
+    <div class="container">
+
+    <!-- row1  -->
+        <div class="row">
+            <div class="span12">
+                    <div class="logo">
+                            <a href="{% url 'web:profile' %}"><img src="{% static 'img/logo.png' %}" alt="Mocha"></a>
+                    </div>
+                    <!-- end logo -->
+
+
+                    <!-- nav -->
+                    <nav class="menu">
+                        <ul>
+                            <li class="toggle"><a href="#">Menu</a></li>
+                            <li><a href="{% url 'web:profile' %}">Home</a></li>
+                            <li><a href="#">About</a></li>
+{#                            <li><a href="page.html">About</a></li>#}
+                            <li><a href="#">Photo</a>
+{#                                <a href="portfolio.html">Portfolio</a>#}
+{#                                <ul>#}
+{#                                    <li><a href="portfolio.html">Portfolio Three Columns</a></li>#}
+{#                                    <li><a href="portfolio-single.html">Portfolio Single Page</a></li>#}
+{#                                </ul>#}
+                            </li>
+                            <li><a href="#">Blog</a></li>
+{#                            <li><a href="blog.html">博客</a></li>#}
+                            <li><a href="#">Contact</a></li>
+{#                            <li><a href="contact.html">联系</a></li>#}
+                        </ul>
+                    </nav>
+                    <!-- end nav -->
             </div>
-        </nav>
+            <!-- end span12 -->
+        </div>
+        <!-- end row 1-->
 
-        <div class="content container">
-            <div class="row">
-                <div class="col-sm-8">
-                    {% block content %}
+        <!-- row2 -->
+        <div class="row">
+            <div class="home-slider span12">
+                 <div class="m-slider flexslider">
+                    <ul class="slides">
+                        <li>
+                            <div class="slide">
 
-                    {% endblock %}
-                </div>
-                <div class="col-sm-4">
-                    <div class="sidebar">
-                        <div class="widget">
-                            <form action="search" method="GET" class="search-form">
-                                {% csrf_token %}
-                                <span class="glyphicon glyphicon-search"></span>
-                                <input name="s" type="text" class="search" placeholder="Search..">
-                                <input type="submit" class="search-label-icon" onchange="getValue()" value=" 搜索">
-                            </form>
-                        </div>
-                        <div class="widget">
-                            <h5>寄语</h5>
-                            <div class="textwidget">
-                                <p>
-                                    人之所以快乐，在于豁达;人之所以成熟，在于看透;人之所以放弃，在于选择;人之所以宽容，在于理解;人之所以充实，在于过程;人之所以成功，在于勤奋;人之所以幸福，在于知足。
-                                </p>
+                                    <h2>Built On Creativity</h2>
+
+                                    <p>Creativity is the invention of mistakes and entertainment</p>
+
+                                    <a href="#" class="button">Go To Blog</a>
+
                             </div>
-                        </div>
-                        <div clas="widget widget-archive">
-                            <h5>目录</h5>
-                            <ul>
-                                {% for item in allType %}
-                                <li class="cat-item">
-                                    <form action="" method="post">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="type" value="{{ item }}"/>
-                                        <input type="submit" value="{{ item }}">
-                                    </form>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                            <!-- end slide --></li>
+                        <li>
+                            <div class="slide">
+
+                                    <h2>钢铁的意志</h2>
+
+                                    <p>富贵不能淫，贫贱不能移，威武不能屈.</p>
+
+                                    <a href="#" class="button">Go To Blog</a>
+
+                            </div>
+                            <!-- end slide -->
+                        </li>
+                    </ul>
+                  </div><!-- end home slider -->
+
             </div>
         </div>
+        <!-- end row 2-->
     </div>
-    <footer>
-        <div class="footer_font">
+    <!-- end container -->
+</header>
+<!-- end header -->
+<section class="portfolio-wrapper alt-section">
+
+
             <div class="container">
-                <div class="row">
-                    <div class="col-md-4">
-                        <br>
-                        <a href="#">
-                             <span >网站介绍</span>
-                        </a>
-                        <br>
-                        <a href="#">
-                             <span>联系我们</span>
-                        </a>
+                <div class="row home-portfolio-wrapper">
 
 
-                    </div>
-                    <div class="col-md-4">
-                        <br>
-                        Copyright © 2018 王渝川
+                            <!-- section title -->
+                            <div class="section-title span12">
 
-                    </div>
-                    <div class="col-md-4">
 
-                            <a href="https://github.com/seekun/ManagementSystem">
-                                <img alt="GitHub" src="{% static 'images/github.png' %}" width="30">
-                                <span class="link_font">源码</span>
-                            </a>
-                        <br>
-                        <span>
-                            开发人员:
-                            <a href="https://github.com/ZuiYee" class="link_font">@王渝川</a>
-                        </span>
-                        <br>
-                    </div>
+                                        <h2>I Like</h2>
+
+                                        <a href="#" class="section-link">Go to Collection</a>
+
+                            </div>
+                            <!-- end section title -->
+
+
+                            <div class="home-portfolio-pagination">
+                                                <a href="#" class="prev"></a>
+                                                <a href="#" class="next"></a>
+
+
+                            </div>
+
+                             <div class="clearfix"></div>
+
+
+                            <!-- portfolio items -->
+                            <div class="portfolio-slider content-wrapper">
+
+
+                                    <!-- portfolio item -->
+                                    <div class="span6 portfolio-item">
+
+
+                                            <!-- image -->
+                                            <a href="portfolio-single.html" class="image">
+                                                <img src="/static/img/demo/portfolio1.png" alt="Brain Surgery">
+                                            </a>
+                                            <!-- end image -->
+
+
+                                            <!-- title -->
+                                            <a href="portfolio-single.html" class="title">Brain Surgery <br /> <span class="meta">Graphic Design , Illustration</span></a>
+
+
+                                            <!-- icon -->
+                                            <a href="portfolio-single.html" class="icon"></a>
+
+
+                                    </div>
+                                    <!-- end portfolio item -->
+
+
+                                    <!-- portfolio item -->
+                                    <div class="span6 portfolio-item">
+
+
+                                            <!-- image -->
+                                            <a href="portfolio-single.html" class="image">
+                                                <img src="{% static 'img/demo/portfolio2.png' %}" alt="Web Design">
+                                            </a>
+                                            <!-- end image -->
+
+
+                                            <!-- title -->
+                                            <a href="portfolio-single.html" class="title">Web Design <br /> <span class="meta">Graphic Design , Illustration</span></a>
+                                            {% block content %}
+
+                                            {% endblock %}
+
+                                            <!-- icon -->
+                                            <a href="portfolio-single.html" class="icon"></a>
+
+
+                                    </div>
+                                    <!-- end portfolio item -->
+
+
+
+
+                                    <!-- portfolio item -->
+                                    <div class="span6 portfolio-item">
+
+
+                                            <!-- image -->
+                                            <a href="portfolio-single.html" class="image">
+                                                <img src="{% static 'img/demo/portfolio3.png' %}" alt="Web Design">
+                                            </a>
+                                            <!-- end image -->
+
+
+                                            <!-- title -->
+                                            <a href="portfolio-single.html" class="title">Web Design <br /> <span class="meta">Graphic Design , Illustration</span></a>
+
+
+                                            <!-- icon -->
+                                            <a href="portfolio-single.html" class="icon"></a>
+
+
+                                    </div>
+                                    <!-- end portfolio item -->
+
+
+
+                            </div>
+                            <!-- end portfolio items -->
+
                 </div>
+                <!-- end row -->
             </div>
+            <!-- end container -->
+
+
+</section>
+<!-- end portfolio -->
+<div class="copyrights"></div>
+<!-- page content -->
+<section class="page">
+
+            <div class="container">
+                        <div class="row">
+
+
+                        <!-- section title -->
+                        <div class="section-title span12">
+
+
+                                    <h2>Latest Entries</h2>
+
+                                    <a href="blog.html" class="section-link">Go to blog</a>
+
+                        </div>
+                        <!-- end section title -->
+
+
+
+                        <!-- content / blog -->
+                        <div class="content-wrapper blog-grid">
+
+
+                                <div class="span4 blog-item">
+
+
+                                            <!-- post image -->
+                                            <div class="post-image">
+
+                                                <!-- image -->
+                                                <a href="single.html" class="image">
+                                                    <img src="{% static 'img/demo/blog1.png' %}" alt="Post Title">
+                                                </a>
+                                                <!-- end image -->
+
+
+                                                <!-- icon -->
+                                                <a href="single.html" class="icon"></a>
+
+                                            </div>
+                                            <!-- end post image -->
+
+
+                                            <!-- post excerpt -->
+                                            <div class="post-excerpt">
+
+                                                    <h4><a href="single.html">Duis sed odio sit amet auctor
+                                                        nibh vulputate.</a></h4>
+
+                                                        <p>
+                                                                Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec dio tincidunt auctor ornare odio.
+                                                        </p>
+
+                                            </div>
+                                            <!-- end post excerpt -->
+
+
+                                </div>
+                                <!-- end blog item -->
+
+
+
+
+
+                                <div class="span4 blog-item">
+
+
+                                            <!-- post image -->
+                                            <div class="post-image">
+
+                                                <!-- image -->
+                                                <a href="single.html" class="image">
+                                                    <img src="{% static 'img/demo/blog2.png' %}" alt="Post Title">
+                                                </a>
+                                                <!-- end image -->
+
+
+                                                <!-- icon -->
+                                                <a href="single.html" class="icon"></a>
+
+                                            </div>
+                                            <!-- end post image -->
+
+
+                                            <!-- post excerpt -->
+                                            <div class="post-excerpt">
+
+                                                    <h4><a href="single.html">Vulputate cursus a sit amet mauris odio.</a></h4>
+
+                                                        <p>
+                                                                Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi accumsan ipsum velit.
+                                                        </p>
+
+                                            </div>
+                                            <!-- end post excerpt -->
+
+
+                                </div>
+                                <!-- end blog item -->
+
+
+
+
+                                <div class="span4 blog-item">
+
+
+                                            <!-- post image -->
+                                            <div class="post-image">
+
+                                                <!-- image -->
+                                                <a href="single.html" class="image">
+                                                    <img src="{% static 'img/demo/blog3.png' %}" alt="Post Title">
+                                                </a>
+                                                <!-- end image -->
+
+
+                                                <!-- icon -->
+                                                <a href="single.html" class="icon"></a>
+
+                                            </div>
+                                            <!-- end post image -->
+
+
+                                            <!-- post excerpt -->
+                                            <div class="post-excerpt">
+
+                                                    <h4><a href="single.html">Odio tincidunt auctor ornare amet accumsan.</a></h4>
+
+                                                        <p>
+                                                                Proin gravida nibh vel velit auctor aliquet. Aenean solcitudin lorem bibendum auctor, nisi elit conec sagittis sem nibh id elit.
+                                                        </p>
+
+                                            </div>
+                                            <!-- end post excerpt -->
+
+
+                                </div>
+                                <!-- end blog item -->
+
+
+
+                        </div>
+                        <!-- end content wrapper -->
+
+
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+
+
+</section>
+<!-- end page content -->
+
+<!-- footer -->
+<footer>
+
+    <div class="container">
+        <div class="row">
+
+
+                    <!-- widgets wrapper -->
+                    <div class="widgets-wrapper">
+
+
+                                <!-- widget -->
+                                <div class="span4 widget">
+
+                                            <h3>Flickr</h3>
+
+
+                                            <!-- widget content -->
+                                            <div class="widget-content">
+
+
+
+
+
+                                            </div>
+                                            <!-- end widget content -->
+
+                                </div>
+                                <!-- end widget -->
+
+
+
+
+
+                                <!-- widget -->
+                                <div class="widget span4">
+
+
+                                            <h3>Get In Touch</h3>
+
+
+                                            <!-- widget content -->
+                                            <div class="widget-content">
+
+
+                                                    <p>Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris.</p>
+
+
+                                                    <div class="clearfix"></div>
+
+                                                    <!-- social icons -->
+                                                    <div class="social-icons">
+
+
+                                                        <a href="#" class="facebook"></a>
+                                                        <a href="#" class="twitter"></a>
+                                                        <a href="#" class="dribbble"></a>
+                                                        <a href="#" class="vimeo"></a>
+                                                        <a href="#" class="linkedin"></a>
+                                                        <a href="#" class="rss"></a>
+
+
+                                                    </div>
+                                                    <!-- end social icons -->
+
+
+                                                    <div class="clearfix"></div>
+
+
+                                                    <!-- newsletter -->
+                                                    <div class="newsletter">
+
+
+                                                                <h4>Sign up for our newsletter</h4>
+
+                                                                <form class="newsletter-form">
+
+                                                                            <input type="text" class="email" placeholder="enter your email address" />
+                                                                            <input type="submit" class="submit" value="" >
+
+                                                                </form>
+                                                                <!-- end form -->
+
+                                                    </div>
+                                                    <!-- end newsletter -->
+
+
+
+                                            </div>
+                                            <!-- end widget content -->
+
+
+
+                                </div>
+                                <!-- end widget -->
+
+
+
+
+                                <!-- widget -->
+                                <div class="widget span4">
+
+
+                                            <h3>Twitter</h3>
+
+                                            <div class="widget-content">
+
+
+                                                        <!-- twitter -->
+                                                        <div class="twitter-wrapper">
+
+
+                                                                        <div class="tweet">
+
+
+                                                                                <p><a href="#">@Mocha</a> Our background is creative, we love open source, we believe that work is about way more than just making money.</p>
+
+
+                                                                        </div>
+                                                                        <!-- end tweet -->
+
+
+                                                                        <div class="tweet">
+
+
+                                                                                <p><a href="#">@Mocha</a> We design for print, for web
+                                                                                and love nothing more than creating and developing brands <a href="#">http://themeforest.net</a>.</p>
+
+
+                                                                        </div>
+                                                                        <!-- end tweet -->
+
+
+                                                                        <div class="tweet">
+
+
+                                                                                <p><a href="#">@Mocha</a> We totally committed to making products that are awesome .</p>
+
+
+                                                                        </div>
+                                                                        <!-- end tweet -->
+
+
+                                                        </div>
+                                                        <!-- end twitter wrapper -->
+
+
+
+                                            </div>
+                                            <!-- end widget content -->
+
+
+                                </div>
+                                <!-- end widget -->
+
+
+                    </div>
+                    <!-- end widgets wrapper -->
+
+
         </div>
-    </footer>
+        <!-- end row -->
+    </div>
+    <!-- end container -->
+
+
+    <!-- second container / copyrights -->
+    <div class="copyrights">
+
+                    <div class="container">
+                        <div class="row">
+
+
+                                <div class="copyrights-wrapper span12">
+
+
+                                    <!-- left copyrights -->
+                                    <div class="left-copyrights">
+
+                                        <p>MOCHA THEME. CREATED BY SUITSTHEME.</p>
+
+                                    </div>
+                                    <!-- end left copyrights -->
+
+
+
+                                    <!-- right menu -->
+                                    <div class="right-menu">
+
+
+                                            <ul>
+                                                    <li><a href="index.html">Home</a></li>
+                                                    <li><a href="page.html">About</a></li>
+                                                    <li><a href="portfolio.html">Portfolio</a></li>
+                                                    <li><a href="blog.html">Blog</a></li>
+                                                    <li><a href="contact.html">Contact</a></li>
+                                                </ul>
+
+
+
+                                    </div>
+                                    <!-- end right menu -->
+
+
+
+                                </div><!-- end span12 -->
+
+                        </div>
+                        <!-- end row -->
+                    </div>
+                    <!-- end container -->
+
+    </div>
+    <!-- end copyrights -->
+</footer>
+
+<!-- Javascript -->
+<script src="/static/js/mediaelement.min.js"></script>
+<script src="/static/js/jquery.flexslider-min.js"></script>
+<script src="/static/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="/static/js/jquery.carouFredSel-6.2.1-packed.js"></script>
+<script src="/static/js/isotope.js"></script>
+<script src="/static/js/jflickrfeed.js"></script>
+<script src="/static/js/custom.js"></script>
+
 </body>
 </html>

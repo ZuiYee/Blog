@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div>
+        <div class="bg bg-blur"></div>
+        <div class="bb"></div>
+
+        <nav class="top-header navbar">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'web:profile' %}">
+                    <img alt="Brand" src="{% static 'images/logo.png' %}" width="150" class="logo-header">
+                </a>
+            </div>
+        </nav>
+
+        <div class="content container">
+            <div class="row">
+                <div class="col-sm-8">
+                    {% block content %}
+
+                    {% endblock %}
+                </div>
+                <div class="col-sm-4">
+                    <div class="sidebar">
+                        <div class="widget">
+                            <form action="search" method="GET" class="search-form">
+                                {% csrf_token %}
+                                <span class="glyphicon glyphicon-search"></span>
+                                <input name="s" type="text" class="search" placeholder="Search..">
+                                <input type="submit" class="search-label-icon" onchange="getValue()" value=" 搜索">
+                            </form>
+                        </div>
+                        <div class="widget">
+                            <h5>寄语</h5>
+                            <div class="textwidget">
+                                <p>
+                                    人之所以快乐，在于豁达;人之所以成熟，在于看透;人之所以放弃，在于选择;人之所以宽容，在于理解;人之所以充实，在于过程;人之所以成功，在于勤奋;人之所以幸福，在于知足。
+                                </p>
+                            </div>
+                        </div>
+                        <div clas="widget widget-archive">
+                            <h5>目录</h5>
+                            <ul>
+                                {% for item in allType %}
+                                <li class="cat-item">
+                                    <form action="" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="type" value="{{ item }}"/>
+                                        <input type="submit" value="{{ item }}">
+                                    </form>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="footer_font">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <br>
+                        <a href="#">
+                             <span >网站介绍</span>
+                        </a>
+                        <br>
+                        <a href="#">
+                             <span>联系我们</span>
+                        </a>
+
+
+                    </div>
+                    <div class="col-md-4">
+                        <br>
+                        Copyright © 2018 王渝川
+
+                    </div>
+                    <div class="col-md-4">
+
+                            <a href="https://github.com/seekun/ManagementSystem">
+                                <img alt="GitHub" src="{% static 'images/github.png' %}" width="30">
+                                <span class="link_font">源码</span>
+                            </a>
+                        <br>
+                        <span>
+                            开发人员:
+                            <a href="https://github.com/ZuiYee" class="link_font">@王渝川</a>
+                        </span>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

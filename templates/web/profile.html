@@ -5,40 +5,36 @@
 <head>
     <meta charset="UTF-8">
     <title>
-        {% block title %}
-        Blog
-        {% endblock %}
+        {% block title %}Blog{% endblock %}
     </title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 {% block content %}
-    <div>
-        {% for item in find %}
-        <div class="post image">
-            <span class="date">{{ item.mon }}<br><small>{{ item.day }}</small></span>
-            <div class="post-title">
-                <h2><a href="{% url 'web:detail' item.id %}">{{ item.title }}</a> </h2>
-                <div class="post-meta">
-                    <h6>{{ item.time }}</h6>
-                </div>
-            </div>
-            <div class="post-body">
-                <p>{{ item.abstract }}</p>
-            </div>
-            <div class="post-meta">
-                <h6 align="right">{{ item.type }}</h6>
-            </div>
-        </div>
-        {% endfor %}
-    <ul class="pagination page">
-        {{ pageStr }}
-    </ul>
-    </div>
+    <a>
+    111111
+    </a>
 {% endblock %}
+{#        {% for item in find %}#}
+{#        <div class="post image">#}
+{#            <span class="date">{{ item.mon }}<br><small>{{ item.day }}</small></span>#}
+{#            <div class="post-title">#}
+{#                <h2><a href="{% url 'web:detail' item.id %}">{{ item.title }}</a> </h2>#}
+{#                <div class="post-meta">#}
+{#                    <h6>{{ item.time }}</h6>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="post-body">#}
+{#                <p>{{ item.abstract }}</p>#}
+{#            </div>#}
+{#            <div class="post-meta">#}
+{#                <h6 align="right">{{ item.type }}</h6>#}
+{#            </div>#}
+{#        </div>#}
+{#        {% endfor %}#}
+{#    <ul class="pagination page">#}
+{#        {{ pageStr }}#}
+{#    </ul>#}
+
+
 </body>
 </html>
