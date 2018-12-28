@@ -132,6 +132,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace('\\', '/')+'/'
 
 # DEBUG = False
-ALLOWED_HOSTS = ['47.100.118.242', '127.0.0.1', 'localhost ', 'zuiyee.online']
+ALLOWED_HOSTS = ['47.100.118.242', '127.0.0.1', 'localhost ', 'www.zuiyee.online']
 
 
