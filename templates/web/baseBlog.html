@@ -55,7 +55,7 @@
 {#                                    <li><a href="portfolio-single.html">Portfolio Single Page</a></li>#}
 {#                                </ul>#}
                             </li>
-                            <li><a href="#">Blog</a></li>
+                            <li><a href="{% url 'web:blogHome' %}">Blog</a></li>
 {#                            <li><a href="blog.html">博客</a></li>#}
                             <li><a href="#">Contact</a></li>
 {#                            <li><a href="contact.html">联系</a></li>#}
@@ -112,171 +112,138 @@
                 <div class="row">
 
 
-                        <!-- blog -->
-                        <div class="blog-wrapper blog-single-post span8">
 
 
-                                        <!-- post -->
-                                        <div class="post gallery-post">
+                    {% block content %}
+
+                    {% endblock %}
 
 
-                                                <!-- post image / gallery -->
-                                                <div class="post-image">
+
+                <!-- sidebar -->
+                <div id="sidebar" class="sidebar span4">
 
 
-                                                        <!-- flexslider -->
-                                                        <div class="flexslider gallery-wrapper">
+                                <div class="widgets-wrapper">
 
 
-                                                                <ul class="slides">
-                                                                    <li><img src="{% static 'img/demo/gallery1.png' %}" alt="Gallery Image 1"></li>
-                                                                    <li><img src="{% static 'img/demo/gallery2.png' %}" alt="Gallery Image 2"></li>
-                                                                </ul>
+
+                                            <div class="widget">
+
+
+                                                    <h4>Categories</h4>
+
+                                                    <!-- widget content -->
+                                                    <div class="widget-content">
+
+                                                            <ul>
+                                                                {% for item in allType %}
+                                                                <li>
+                                                                    <form name='{{ item }}' action="" method="post">
+                                                                        {% csrf_token %}
+                                                                        <input type="hidden" name="type" value="{{ item }}"/>
+                                                                        <a href="javascript:document.{{ item }}.submit();">{{ item }}</a>
+                                                                    </form>
+                                                                </li>
+                                                                {% endfor %}
+                                                            </ul>
+
+
+                                                    </div>
+                                                    <!-- end widget content -->
+
+
+                                            </div>
+                                            <!-- end widget -->
+
+
+
+
+                                            <!-- widget -->
+                                            <div class="widget">
+
+                                                <h4>Recent Post </h4>
+
+                                                <div class="widget-content">
+
+                                                        <div class="recent-post-tab">
+
+                                                                <span>13 August 2013</span>
+                                                                <a href="#">Everything You Can Do Right Now</a>
 
 
                                                         </div>
-                                                        <!-- end flex slider gallery -->
+                                                        <!-- end post -->
+
+                                                        <div class="recent-post-tab">
+
+                                                                <span>5 August 2013</span>
+                                                                <a href="#">Audio Post with a Nice Featured Image</a>
 
 
+                                                        </div>
+                                                        <!-- end post -->
+
+                                                        <div class="recent-post-tab">
+
+                                                                <span>26 July 2013</span>
+                                                                <a href="#">Post with a Featured Video</a>
+
+
+                                                        </div>
+                                                        <!-- end post -->
 
                                                 </div>
-                                                <!-- end gallery / post image -->
-
-                                                {% block content %}
-
-                                                {% endblock %}
-                                    </div>
-                                        <!-- end post -->
-
-
-                        </div>
-                        <!-- end blog -->
-
-
-                        <!-- sidebar -->
-                        <div id="sidebar" class="sidebar span4">
-
-
-                                        <div class="widgets-wrapper">
+                                                <!-- end widget content -->
+                                            </div>
+                                            <!-- end widget -->
 
 
 
-                                                    <div class="widget">
+
+                                            <!-- widget -->
+                                            <div class="widget">
 
 
-                                                            <h4>Categories</h4>
+                                                    <h4>Latest Works</h4>
 
-                                                            <!-- widget content -->
-                                                            <div class="widget-content">
+                                                    <div class="widget-content">
 
-                                                                    <ul>
-                                                                        {% for item in allType %}
-                                                                        <li>
-                                                                            <form name='form1' action="baseBlog.html" method="post">
-                                                                                {% csrf_token %}
-                                                                                <input type="hidden" name="type" value="{{ item }}"/>
-                                                                                <a href="javascript:document.form1.submit();">{{ item }}</a>
-                                                                            </form>
-                                                                        </li>
-                                                                        {% endfor %}
-                                                                    </ul>
+
+                                                            <div class="works-wrapper">
+
+
+
+                                                                    <a href="#"><img src="{% static 'img/demo/work1.png' %}" alt="Wrk" /></a>
+                                                                    <a href="#"><img src="{% static 'img/demo/work2.png' %}" alt="Wrk" /></a>
+                                                                    <a href="#"><img src="{% static 'img/demo/work3.png' %}" alt="Wrk" /></a>
+                                                                    <a href="#"><img src="{% static 'img/demo/work4.png' %}" alt="Wrk" /></a>
+                                                                    <a href="#"><img src="{% static 'img/demo/work5.png' %}" alt="Wrk" /></a>
+                                                                    <a href="#"><img src="{% static 'img/demo/work6.png' %}" alt="Wrk" /></a>
+                                                                    <a href="#"><img src="{% static 'img/demo/work7.png' %}" alt="Wrk" /></a>
+                                                                    <a href="#"><img src="{% static 'img/demo/work8.png' %}" alt="Wrk" /></a>
+
 
 
                                                             </div>
-                                                            <!-- end widget content -->
+                                                            <!-- end works wrapper -->
 
 
                                                     </div>
-                                                    <!-- end widget -->
+                                                    <!-- end widget content -->
+
+
+                                            </div>
+                                            <!-- end widget -->
 
 
 
-
-                                                    <!-- widget -->
-                                                    <div class="widget">
-
-                                                        <h4>Recent Post </h4>
-
-                                                        <div class="widget-content">
-
-                                                                <div class="recent-post-tab">
-
-                                                                        <span>13 August 2013</span>
-                                                                        <a href="#">Everything You Can Do Right Now</a>
+                                </div>
+                                <!-- end widgets wrapper -->
 
 
-                                                                </div>
-                                                                <!-- end post -->
-
-                                                                <div class="recent-post-tab">
-
-                                                                        <span>5 August 2013</span>
-                                                                        <a href="#">Audio Post with a Nice Featured Image</a>
-
-
-                                                                </div>
-                                                                <!-- end post -->
-
-                                                                <div class="recent-post-tab">
-
-                                                                        <span>26 July 2013</span>
-                                                                        <a href="#">Post with a Featured Video</a>
-
-
-                                                                </div>
-                                                                <!-- end post -->
-
-                                                        </div>
-                                                        <!-- end widget content -->
-                                                    </div>
-                                                    <!-- end widget -->
-
-
-
-
-                                                    <!-- widget -->
-                                                    <div class="widget">
-
-
-                                                            <h4>Latest Works</h4>
-
-                                                            <div class="widget-content">
-
-
-                                                                    <div class="works-wrapper">
-
-
-
-                                                                            <a href="#"><img src="{% static 'img/demo/work1.png' %}" alt="Wrk" /></a>
-                                                                            <a href="#"><img src="{% static 'img/demo/work2.png' %}" alt="Wrk" /></a>
-                                                                            <a href="#"><img src="{% static 'img/demo/work3.png' %}" alt="Wrk" /></a>
-                                                                            <a href="#"><img src="{% static 'img/demo/work4.png' %}" alt="Wrk" /></a>
-                                                                            <a href="#"><img src="{% static 'img/demo/work5.png' %}" alt="Wrk" /></a>
-                                                                            <a href="#"><img src="{% static 'img/demo/work6.png' %}" alt="Wrk" /></a>
-                                                                            <a href="#"><img src="{% static 'img/demo/work7.png' %}" alt="Wrk" /></a>
-                                                                            <a href="#"><img src="{% static 'img/demo/work8.png' %}" alt="Wrk" /></a>
-
-
-
-                                                                    </div>
-                                                                    <!-- end works wrapper -->
-
-
-                                                            </div>
-                                                            <!-- end widget content -->
-
-
-                                                    </div>
-                                                    <!-- end widget -->
-
-
-
-                                        </div>
-                                        <!-- end widgets wrapper -->
-
-
-                        </div>
-                        <!-- end sidebar -->
+                </div>
+                <!-- end sidebar -->
 
 
                 </div>

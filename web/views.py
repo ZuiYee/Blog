@@ -2,8 +2,8 @@ from django.shortcuts import render
 from .models import Article
 from django.utils.safestring import mark_safe
 allType = []
-Month = {'1': "Jan", '2': "Feb", '3': "Mar", '4': "Apr", '5': "May", '6': "Jun", '7': "Jul",
-                '8': "Aug", '9': "Sep", '10': "Oct", '11': "Nov", '12': "Dec"}
+Month = {'01': "Jan", '02': "Feb", '03': "Mar", '04': "Apr", '05': "May", '06': "Jun", '07': "Jul",
+                '08': "Aug", '09': "Sep", '10': "Oct", '11': "Nov", '12': "Dec"}
 find = None
 
 def summary():
@@ -50,22 +50,22 @@ def Paging(page=1, find=None):
     if page == 1:
         prev = '<li><a href="javascript:void(0);">&laquo;</a></li>'
     else:
-        prev = '<li><a href="/profile/?p=%s">&laquo;</a></li>' % (page - 1)
+        prev = '<li><a href="/web/blogHome/?p=%s">&laquo;</a></li>' % (page - 1)
     pageList.append(prev)
     for i in range(int(startIndex), int(endIndex)):
         if i == page:
-            temp = '<li><a class="active" href="/profile/?p=%s">%s</a></li>' % (i, i)
+            temp = '<li><a class="active" href="/web/blogHome/?p=%s">%s</a></li>' % (i, i)
         else:
-            temp = '<li><a href="/profile/?p=%s">%s</a></li>' % (i, i)
+            temp = '<li><a href="/web/blogHome/?p=%s">%s</a></li>' % (i, i)
         pageList.append(temp)
     if page == pageCount:
         nex = '<li><a href="javascript:void(0);">&raquo;</a></li>'
     else:
-        nex = '<li><a href="/profile/?p=%s">&raquo;</a></li>' % (page + 1)
+        nex = '<li><a href="/web/blogHome/?p=%s">&raquo;</a></li>' % (page + 1)
     pageList.append(nex)
 
     jump = """
-        <input type="text"  class="jump" /><button class="btn btn-default" onclick='jumpTo(this, "/profile/?p=");' id="jumpPageNum">Go</button>
+        <input type="text"  class="jump" /><button class="btn btn-default" onclick='jumpTo(this, "/web/blogHome/?p=");' id="jumpPageNum">Go</button>
         <script>
             function jumpTo(ths, base){
                 var val = ths.previousSibling.value;
@@ -87,35 +87,45 @@ def Type(request, type):
     find = Article.objects.filter(type=type)
     if find:
         context = Paging(1, find)
-        return render(request, 'web/profile.html', context)
+        return render(request, 'web/blogHome.html', context)
     else:
         return render(request, 'web/error.html')
 
 
 def profile(request):
-    global allType,find
+    global allType, find
     context = {}
-    if request.method == 'POST':
-        if request.POST.get("type"):
-            return Type(request, request.POST.get("type"))
-    if request.method == 'GET':
-        if request.GET.get("s"):
-            find = Article.objects.filter(title__contains=request.GET.get("s"))
-            if find:
-                context = Paging(1, find)
-                return render(request, 'web/profile.html', context)
-            else:
-                return render(request, 'web/error.html')
-        if request.GET.get("p"):
-            page = int(request.GET.get("p", 1))
-            context = Paging(page, find)
+    # if request.method == 'POST':
+    #     if request.POST.get("type"):
+    #         return Type(request, request.POST.get("type"))
+    # if request.method == 'GET':
+        # if request.GET.get("s"):
+        #     find = Article.objects.filter(title__contains=request.GET.get("s"))
+        #     if find:
+        #         context = Paging(1, find)
+        #         return render(request, 'web/profile.html', context)
+        #     else:
+        #         return render(request, 'web/error.html')
+        # if request.GET.get("p"):
+        #     page = int(request.GET.get("p", 1))
+        #     context = Paging(page, find)
+        #
+        #     return render(request, 'web/profile.html', context)
 
-            return render(request, 'web/profile.html', context)
-
-    summary()
+    # summary()
     find = Article.objects.all()
+    newfind = []
+    newfind.append(find.last())
+    x = find.filter(pk=find.last().pk-1)
+    if x:
+        newfind.append(find.filter(pk=find.last().pk-1)[0])
+    y = find.filter(pk=find.last().pk-2)
+    if y:
+        newfind.append(find.filter(pk=find.last().pk-2)[0])
+
     if find:
-        context = Paging(1, find)
+        context['find'] = newfind
+        # context = Paging(1, find)
         return render(request, 'web/profile.html', context)
     else:
         return render(request, 'web/error.html')
@@ -140,3 +150,39 @@ def detail(request, key):
     else:
         return render(request, 'web/error.html')
 
+
+def blogHome(request):
+    global allType, find
+    context = {}
+    if request.method == 'POST':
+        if request.POST.get("type"):
+            return Type(request, request.POST.get("type"))
+    if request.method == 'GET':
+        if request.GET.get("s"):
+            find = Article.objects.filter(title__contains=request.GET.get("s"))
+            if find:
+                context = Paging(1, find)
+                return render(request, 'web/blogHome.html', context)
+            else:
+                return render(request, 'web/error.html')
+        if request.GET.get("p"):
+            page = int(request.GET.get("p", 1))
+            context = Paging(page, find)
+            return render(request, 'web/blogHome.html', context)
+    summary()
+
+    find = Article.objects.all()
+    newfind = []
+    newfind.append(find.last())
+    x = find.filter(pk=find.last().pk - 1)
+    if x:
+        newfind.append(find.filter(pk=find.last().pk - 1)[0])
+    y = find.filter(pk=find.last().pk - 2)
+    if y:
+        newfind.append(find.filter(pk=find.last().pk - 2)[0])
+    if find:
+        context = Paging(1, find)
+        context['newfind'] = newfind
+        return render(request, 'web/blogHome.html', context)
+    else:
+        return render(request, 'web/error.html')

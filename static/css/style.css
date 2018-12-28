@@ -90,7 +90,7 @@
 	}
 }
 
-.post {
+.myPost {
 	position: relative;
 	text-align: left;
 	margin-bottom: 25px;
@@ -106,7 +106,7 @@
 			border-radius: 4px;
 }
 
-.post .date {
+.myPost .date {
 	position: absolute;
 	text-align: center;
 	width: 40px;
@@ -120,13 +120,13 @@
 	border-bottom: 1px solid #e9e9e9;
 }
 
-.post .date small { font-size: 0.5833333333333333em; }
+.myPost .date small { font-size: 0.5833333333333333em; }
 
-.post-title a { color: #303336; }
-.post-title a:hover { color: #2db4d8; text-decoration: none; }
-.post-meta h6, .post-meta a { color: #332f76; }
+.myTitle a { color: #303336; }
+.myTitle a:hover { color: #2db4d8; text-decoration: none; }
+.myMeta h6, .myMeta a { color: #332f76; }
 
-.post.quote .post-title h2, .post.link .post-title h2 {
+.myPost.quote .myTitle h2, .myPost.link .myTitle h2 {
 	font-size: 1em!important;
 	text-transform: uppercase;
 	letter-spacing: 0.10em;
@@ -134,20 +134,20 @@
 }
 
 @media (min-width: 768px) {
-	.post { margin-bottom: 35px; padding-bottom: 20px; }
-	.post .date { font-size: 1.2em; }
+	.myPost { margin-bottom: 35px; padding-bottom: 20px; }
+	.myPost .date { font-size: 1.2em; }
 	.widget { margin-bottom: 35px; }
 }
 
 @media (min-width: 1200px) {
-	.post .date { font-size: 1.6em; }
-	.post { padding-left: 70px; padding-bottom: 30px; margin-bottom: 50px; }
+	.myPost .date { font-size: 1.6em; }
+	.myPost { padding-left: 70px; padding-bottom: 30px; margin-bottom: 50px; }
 	.widget { margin-bottom: 50px; }
 }
 
-.post-body ul, .unordered-list { margin-bottom: 20px; }
-.post-body ul li, .unordered-list li { margin-bottom: 5px; }
-.post-body ul li:before, .unordered-list li:before {
+.myBody ul, .unordered-list { margin-bottom: 20px; }
+.myBody ul li, .unordered-list li { margin-bottom: 5px; }
+.myBody ul li:before, .unordered-list li:before {
 	content: "∙";
 	margin-right: 5px;
 }

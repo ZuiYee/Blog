@@ -12,79 +12,50 @@
 </head>
 <body>
 {% block content %}
+    <!-- blog -->
+<div class="blog-wrapper blog-single-post span8">
+    <!-- post -->
+    <div class="post gallery-post">
+        <!-- post image / gallery -->
+        <div class="post-image">
+            <!-- flexslider -->
+            <div class="flexslider gallery-wrapper">
+                <ul class="slides">
+                    <li><img src="{% static 'img/demo/gallery1.png' %}" alt="Gallery Image 1"></li>
+                    <li><img src="{% static 'img/demo/gallery2.png' %}" alt="Gallery Image 2"></li>
+                </ul>
+            </div>
+            <!-- end flex slider gallery -->
+        </div>
+        <!-- end gallery / post image -->
  <!-- meta -->
-<div class="meta">
-        <p>Category: <span><a href="#">{{ find.type }}</a> <span class="dash">/</span> {{ find.day }} {{ find.mon }} {{ find.year }} <span class="dash">/</span> <a href="#comments">7 Comments</a></span></p>
-</div>
-<!-- end meta -->
-<!-- content -->
-<div class="post-content content-section">
-        <h3><a href="#">{{ find.title }}</a></h3>
-        <div class="content">
-                <p class="light-font">
-                    {{ find.abstract }}
-                </p>
-                <p>-------------------------------------------------------------------------------------------------------</p>
-                <p>{{ find.content }}</p>
-                <div class="margin"></div>
-{#                <div class="floatImage" ><img src="{% static 'img/demo/blog_post_image.png' %}" alt="Post" /></div>#}
-{#                <p class="light-font">Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. <span class="bold">Mauris in erat justo. Nullam ac urna eu felis dapibus condimentum sit amet a augue. Sed non neque elit. Sed ut imperdiet nisi. Proin condimentum fermentum nunc.</span> Etiam pharetra, erat sed fermentum feugiat, velit mauris egestas quam, ut aliquam massa nisl quis neque. Suspendisse in orci enim.</p>#}
+        <div class="meta">
+                <p>Category: <span><a href="#">{{ find.type }}</a> <span class="dash">/</span> {{ find.day }} {{ find.mon }} {{ find.year }} <span class="dash">/</span> <a href="#comments">7 Comments</a></span></p>
         </div>
-        <!-- end post content -->
-</div>
-<!-- end content -->
-<!-- comments -->
-<div id="comments" class="comments content-section">
-    <h3>4 Comments</h3>
-    <div class="comment">
-        <!-- avatar -->
-        <div class="avatar">
-            <img src="{% static 'img/demo/avatar1.png' %}" alt="Avatar">
-        </div>
-        <!-- end avatar -->
+        <!-- end meta -->
         <!-- content -->
-        <div class="content">
-            <div class="comment-meta">
-                    <a href="#">SuiteTheme</a>
-                    <span>18 August 2013</span>
-                    <a href="#respond" class="reply">Reply</a>
-            </div>
-            <!-- end comment meta -->
-            <!-- comment content -->
-            <div class="comment-content">
-                    <p class="light-font">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis, dolor odio sunt facilis hic quas laborum voluptatem excepturi quos ducimus nam perferendis vel aut ab nemo nisi soluta itaque nulla.</p>
-            </div>
-            <!-- end comment content -->
+        <div class="post-content content-section">
+                <h3><a href="#">{{ find.title }}</a></h3>
+                <div class="content">
+                        <p class="light-font">
+                            {{ find.abstract }}
+                        </p>
+                        <p>-------------------------------------------------------------------------------------------------------</p>
+                        <p>{{ find.content }}</p>
+                        <div class="margin"></div>
+        {#                <div class="floatImage" ><img src="{% static 'img/demo/blog_post_image.png' %}" alt="Post" /></div>#}
+        {#                <p class="light-font">Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. <span class="bold">Mauris in erat justo. Nullam ac urna eu felis dapibus condimentum sit amet a augue. Sed non neque elit. Sed ut imperdiet nisi. Proin condimentum fermentum nunc.</span> Etiam pharetra, erat sed fermentum feugiat, velit mauris egestas quam, ut aliquam massa nisl quis neque. Suspendisse in orci enim.</p>#}
+                </div>
+                <!-- end post content -->
         </div>
         <!-- end content -->
-    </div>
-    <!-- end comment -->
-    <div class="comment">
-        <!-- avatar @note width and height will be removed in WP version -->
-        <div class="avatar">
-                <img src="{% static 'img/demo/avatar2.png' %}" alt="Avatar">
-        </div>
-        <!-- end avatar -->
-        <!-- content -->
-        <div class="content">
-            <div class="comment-meta">
-                    <a href="#">Johny Depp</a>
-                    <span>19 August 2013</span>
-                    <a href="#respond" class="reply">Reply</a>
-            </div>
-            <!-- end comment meta -->
-            <!-- comment content -->
-            <div class="comment-content">
-                    <p class="light-font">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis, dolor odio sunt facilis hic quas laborum voluptatem excepturi quos ducimus nam perferendis vel aut ab nemo nisi soluta itaque nulla.</p>
-            </div>
-            <!-- end comment content -->
-        </div>
-        <!-- end content -->
-
-        <div class="comment">
+        <!-- comments -->
+        <div id="comments" class="comments content-section">
+            <h3>4 Comments</h3>
+            <div class="comment">
                 <!-- avatar -->
                 <div class="avatar">
-                        <img src="{% static 'img/demo/avatar1.png' %}" alt="Avatar">
+                    <img src="{% static 'img/demo/avatar1.png' %}" alt="Avatar">
                 </div>
                 <!-- end avatar -->
                 <!-- content -->
@@ -103,35 +74,80 @@
                 </div>
                 <!-- end content -->
             </div>
-    </div>
-    <!-- end comment -->
-    <div class="comment">
-        <!-- avatar -->
-        <div class="avatar">
-                <img src="{% static 'img/demo/avatar3.png' %}" alt="Avatar">
-        </div>
-        <!-- end avatar -->
-        <!-- content -->
-        <div class="content">
-            <div class="comment-meta">
-                <a href="#">Brad Pitt</a>
-                <span>18 August 2013</span>
-                <a href="#respond" class="reply">Reply</a>
+            <!-- end comment -->
+            <div class="comment">
+                <!-- avatar @note width and height will be removed in WP version -->
+                <div class="avatar">
+                        <img src="{% static 'img/demo/avatar2.png' %}" alt="Avatar">
+                </div>
+                <!-- end avatar -->
+                <!-- content -->
+                <div class="content">
+                    <div class="comment-meta">
+                            <a href="#">Johny Depp</a>
+                            <span>19 August 2013</span>
+                            <a href="#respond" class="reply">Reply</a>
+                    </div>
+                    <!-- end comment meta -->
+                    <!-- comment content -->
+                    <div class="comment-content">
+                            <p class="light-font">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis, dolor odio sunt facilis hic quas laborum voluptatem excepturi quos ducimus nam perferendis vel aut ab nemo nisi soluta itaque nulla.</p>
+                    </div>
+                    <!-- end comment content -->
+                </div>
+                <!-- end content -->
+
+                <div class="comment">
+                        <!-- avatar -->
+                        <div class="avatar">
+                                <img src="{% static 'img/demo/avatar1.png' %}" alt="Avatar">
+                        </div>
+                        <!-- end avatar -->
+                        <!-- content -->
+                        <div class="content">
+                            <div class="comment-meta">
+                                    <a href="#">SuiteTheme</a>
+                                    <span>18 August 2013</span>
+                                    <a href="#respond" class="reply">Reply</a>
+                            </div>
+                            <!-- end comment meta -->
+                            <!-- comment content -->
+                            <div class="comment-content">
+                                    <p class="light-font">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis, dolor odio sunt facilis hic quas laborum voluptatem excepturi quos ducimus nam perferendis vel aut ab nemo nisi soluta itaque nulla.</p>
+                            </div>
+                            <!-- end comment content -->
+                        </div>
+                        <!-- end content -->
+                    </div>
             </div>
-            <!-- end comment meta -->
-            <!-- comment content -->
-            <div class="comment-content">
-                <p class="light-font">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis, dolor odio sunt facilis hic quas laborum voluptatem excepturi quos ducimus nam perferendis vel aut ab nemo nisi soluta itaque nulla.</p>
+            <!-- end comment -->
+            <div class="comment">
+                <!-- avatar -->
+                <div class="avatar">
+                        <img src="{% static 'img/demo/avatar3.png' %}" alt="Avatar">
+                </div>
+                <!-- end avatar -->
+                <!-- content -->
+                <div class="content">
+                    <div class="comment-meta">
+                        <a href="#">Brad Pitt</a>
+                        <span>18 August 2013</span>
+                        <a href="#respond" class="reply">Reply</a>
+                    </div>
+                    <!-- end comment meta -->
+                    <!-- comment content -->
+                    <div class="comment-content">
+                        <p class="light-font">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis, dolor odio sunt facilis hic quas laborum voluptatem excepturi quos ducimus nam perferendis vel aut ab nemo nisi soluta itaque nulla.</p>
+                    </div>
+                    <!-- end comment content -->
+                </div>
+                <!-- end content -->
             </div>
-            <!-- end comment content -->
+            <!-- end comment -->
         </div>
-        <!-- end content -->
-    </div>
-    <!-- end comment -->
-</div>
-<!-- end comments -->
-<!-- comments form -->
-    <div class="content-section comments-wrapper">
+        <!-- end comments -->
+        <!-- comments form -->
+            <div class="content-section comments-wrapper">
         <h3 id="respond">Leave a Comment</h3>
         <form class="comments-form">
             <input type="text" name="name" placeholder="Your Name*" class="name" />
@@ -141,6 +157,10 @@
             <input type="submit" class="mocha-button submit-comment" value="Submit Comment" />
         </form>
     </div>
+    </div>
+    <!-- end post -->
+</div>
+<!-- end blog -->
 
 <!-- end comments form -->
 {% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'web/baseBlog.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+        Blog
+        {% endblock %}
+    </title>
+</head>
+<body>
+{% block content %}
+<div class="blog-wrapper span8">
+
+     <!-- post -->
+    <div class="post gallery-post">
+
+
+            <!-- post image / gallery -->
+            <div class="post-image">
+
+
+                    <!-- flexslider -->
+                    <div class="flexslider gallery-wrapper">
+
+
+                            <ul class="slides">
+                                <li><img src="{% static 'img/demo/gallery1.png' %}" alt="Gallery Image 1"></li>
+                                <li><img src="{% static 'img/demo/gallery2.png' %}" alt="Gallery Image 2"></li>
+                            </ul>
+
+
+                    </div>
+                    <!-- end flex slider gallery -->
+
+
+
+            </div>
+            <!-- end gallery / post image -->
+
+    </div>
+    <!-- end post -->
+    <!-- post -->
+    {% for item in find %}
+    <div class="post">
+            <!-- meta -->
+            <div class="meta" >
+                    <p>Category: <span><a href="#">{{ item.type }}</a> / {{ item.day }} {{ item.year }} {{ item.year }} / <a href="#comments">7 Comments</a></span></p>
+            </div>
+            <!-- end meta -->
+            <!-- content -->
+            <div class="post-content">
+
+                        <div class="myPost">
+                            <span class="date">{{ item.mon }}<br><small>{{ item.day }}</small></span>
+                            <div class="myTitle">
+                                <h2><a href="{% url 'web:detail' item.id %}">{{ item.title }}</a> </h2>
+                            </div>
+                            <div class="post-body">
+                                <p>{{ item.abstract }}</p>
+                            </div>
+
+
+                            <a href="{% url 'web:detail' item.id %}" class="mocha-button">Read More</a>
+                        </div>
+
+{#                    <h3><a href="{% url 'web:detail' item.id %}">{{ item.title }}</a></h3>#}
+{##}
+{#                    <div class="content">#}
+{##}
+{#                            <p class="light-font">{{ item.abstract }}</p>#}
+{#                    </div>#}
+
+                    <!-- end post content -->
+                    <!-- read more -->
+
+
+            </div>
+            <!-- end content -->
+
+
+    </div>
+    {% endfor %}
+    <!-- end post -->
+
+    <!-- pagination -->
+    <div class="paginationNew ">
+        <ul class="pageSelected">
+            {{ pageStr }}
+        </ul>
+    </div>
+    <!-- end pagination -->
+</div>
+<!-- end blog -->
+
+{% endblock %}
+</body>
+</html>
