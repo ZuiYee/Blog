@@ -1,0 +1,519 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+
+        {% endblock %}
+    </title>
+
+{#    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>#}
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-responsive.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" type="text/css">
+{#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">#}
+{#    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">#}
+    <!-- Latest compiled JavaScript -->
+{#    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>#}
+
+    <script src="/static/js/jquery.min.js"></script>
+{#    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">#}
+</head>
+<body class="body-container preload">
+<!-- header -->
+<header id="mocha-head" class="header">
+
+    <!-- Background -->
+    <div class="background-image"></div>
+
+
+    <!-- container -->
+    <div class="container">
+
+    <!-- row1  -->
+        <div class="row">
+            <div class="span12">
+                    <div class="logo">
+                            <a href="{% url 'web:profile' %}"><img src="{% static 'img/logo.png' %}" alt="Mocha"></a>
+                    </div>
+                    <!-- end logo -->
+
+
+                    <!-- nav -->
+                    <nav class="menu">
+                        <ul>
+                            <li class="toggle"><a href="#">Menu</a></li>
+                            <li><a href="{% url 'web:profile' %}">Home</a></li>
+                            <li><a href="#">About</a></li>
+{#                            <li><a href="page.html">About</a></li>#}
+                            <li><a href="#">Photo</a>
+{#                                <a href="portfolio.html">Portfolio</a>#}
+{#                                <ul>#}
+{#                                    <li><a href="portfolio.html">Portfolio Three Columns</a></li>#}
+{#                                    <li><a href="portfolio-single.html">Portfolio Single Page</a></li>#}
+{#                                </ul>#}
+                            </li>
+                            <li><a href="#">Blog</a></li>
+{#                            <li><a href="blog.html">博客</a></li>#}
+                            <li><a href="#">Contact</a></li>
+{#                            <li><a href="contact.html">联系</a></li>#}
+                        </ul>
+                    </nav>
+                    <!-- end nav -->
+            </div>
+            <!-- end span12 -->
+        </div>
+        <!-- end row 1-->
+
+        <!-- row2 -->
+        <div class="row">
+            <div class="home-slider span12">
+                 <div class="m-slider flexslider">
+                    <ul class="slides">
+                        <li>
+                            <div class="slide">
+
+                                    <h2>Built On Creativity</h2>
+
+                                    <p>Creativity is the invention of mistakes and entertainment</p>
+
+                                    <a href="#" class="button">Go To Blog</a>
+
+                            </div>
+                            <!-- end slide --></li>
+                        <li>
+                            <div class="slide">
+
+                                    <h2>钢铁的意志</h2>
+
+                                    <p>富贵不能淫，贫贱不能移，威武不能屈.</p>
+
+                                    <a href="#" class="button">Go To Blog</a>
+
+                            </div>
+                            <!-- end slide -->
+                        </li>
+                    </ul>
+                  </div><!-- end home slider -->
+
+            </div>
+        </div>
+        <!-- end row 2-->
+    </div>
+    <!-- end container -->
+</header>
+<!-- end header -->
+<section class="page">
+
+
+            <div class="container">
+                <div class="row">
+
+
+                        <!-- blog -->
+                        <div class="blog-wrapper blog-single-post span8">
+
+
+                                        <!-- post -->
+                                        <div class="post gallery-post">
+
+
+                                                <!-- post image / gallery -->
+                                                <div class="post-image">
+
+
+                                                        <!-- flexslider -->
+                                                        <div class="flexslider gallery-wrapper">
+
+
+                                                                <ul class="slides">
+                                                                    <li><img src="{% static 'img/demo/gallery1.png' %}" alt="Gallery Image 1"></li>
+                                                                    <li><img src="{% static 'img/demo/gallery2.png' %}" alt="Gallery Image 2"></li>
+                                                                </ul>
+
+
+                                                        </div>
+                                                        <!-- end flex slider gallery -->
+
+
+
+                                                </div>
+                                                <!-- end gallery / post image -->
+
+                                                {% block content %}
+
+                                                {% endblock %}
+                                    </div>
+                                        <!-- end post -->
+
+
+                        </div>
+                        <!-- end blog -->
+
+
+                        <!-- sidebar -->
+                        <div id="sidebar" class="sidebar span4">
+
+
+                                        <div class="widgets-wrapper">
+
+
+
+                                                    <div class="widget">
+
+
+                                                            <h4>Categories</h4>
+
+                                                            <!-- widget content -->
+                                                            <div class="widget-content">
+
+                                                                    <ul>
+                                                                        {% for item in allType %}
+                                                                        <li>
+                                                                            <form name='form1' action="baseBlog.html" method="post">
+                                                                                {% csrf_token %}
+                                                                                <input type="hidden" name="type" value="{{ item }}"/>
+                                                                                <a href="javascript:document.form1.submit();">{{ item }}</a>
+                                                                            </form>
+                                                                        </li>
+                                                                        {% endfor %}
+                                                                    </ul>
+
+
+                                                            </div>
+                                                            <!-- end widget content -->
+
+
+                                                    </div>
+                                                    <!-- end widget -->
+
+
+
+
+                                                    <!-- widget -->
+                                                    <div class="widget">
+
+                                                        <h4>Recent Post </h4>
+
+                                                        <div class="widget-content">
+
+                                                                <div class="recent-post-tab">
+
+                                                                        <span>13 August 2013</span>
+                                                                        <a href="#">Everything You Can Do Right Now</a>
+
+
+                                                                </div>
+                                                                <!-- end post -->
+
+                                                                <div class="recent-post-tab">
+
+                                                                        <span>5 August 2013</span>
+                                                                        <a href="#">Audio Post with a Nice Featured Image</a>
+
+
+                                                                </div>
+                                                                <!-- end post -->
+
+                                                                <div class="recent-post-tab">
+
+                                                                        <span>26 July 2013</span>
+                                                                        <a href="#">Post with a Featured Video</a>
+
+
+                                                                </div>
+                                                                <!-- end post -->
+
+                                                        </div>
+                                                        <!-- end widget content -->
+                                                    </div>
+                                                    <!-- end widget -->
+
+
+
+
+                                                    <!-- widget -->
+                                                    <div class="widget">
+
+
+                                                            <h4>Latest Works</h4>
+
+                                                            <div class="widget-content">
+
+
+                                                                    <div class="works-wrapper">
+
+
+
+                                                                            <a href="#"><img src="{% static 'img/demo/work1.png' %}" alt="Wrk" /></a>
+                                                                            <a href="#"><img src="{% static 'img/demo/work2.png' %}" alt="Wrk" /></a>
+                                                                            <a href="#"><img src="{% static 'img/demo/work3.png' %}" alt="Wrk" /></a>
+                                                                            <a href="#"><img src="{% static 'img/demo/work4.png' %}" alt="Wrk" /></a>
+                                                                            <a href="#"><img src="{% static 'img/demo/work5.png' %}" alt="Wrk" /></a>
+                                                                            <a href="#"><img src="{% static 'img/demo/work6.png' %}" alt="Wrk" /></a>
+                                                                            <a href="#"><img src="{% static 'img/demo/work7.png' %}" alt="Wrk" /></a>
+                                                                            <a href="#"><img src="{% static 'img/demo/work8.png' %}" alt="Wrk" /></a>
+
+
+
+                                                                    </div>
+                                                                    <!-- end works wrapper -->
+
+
+                                                            </div>
+                                                            <!-- end widget content -->
+
+
+                                                    </div>
+                                                    <!-- end widget -->
+
+
+
+                                        </div>
+                                        <!-- end widgets wrapper -->
+
+
+                        </div>
+                        <!-- end sidebar -->
+
+
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+
+
+</section>
+
+
+<!-- footer -->
+<footer>
+
+    <div class="container">
+        <div class="row">
+
+
+                    <!-- widgets wrapper -->
+                    <div class="widgets-wrapper">
+
+
+                                <!-- widget -->
+                                <div class="span4 widget">
+
+                                            <h3>Flickr</h3>
+
+
+                                            <!-- widget content -->
+                                            <div class="widget-content">
+
+
+
+
+
+                                            </div>
+                                            <!-- end widget content -->
+
+                                </div>
+                                <!-- end widget -->
+
+
+
+
+
+                                <!-- widget -->
+                                <div class="widget span4">
+
+
+                                            <h3>Get In Touch</h3>
+
+
+                                            <!-- widget content -->
+                                            <div class="widget-content">
+
+
+                                                    <p>Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris.</p>
+
+
+                                                    <div class="clearfix"></div>
+
+                                                    <!-- social icons -->
+                                                    <div class="social-icons">
+
+
+                                                        <a href="#" class="facebook"></a>
+                                                        <a href="#" class="twitter"></a>
+                                                        <a href="#" class="dribbble"></a>
+                                                        <a href="#" class="vimeo"></a>
+                                                        <a href="#" class="linkedin"></a>
+                                                        <a href="#" class="rss"></a>
+
+
+                                                    </div>
+                                                    <!-- end social icons -->
+
+
+                                                    <div class="clearfix"></div>
+
+
+                                                    <!-- newsletter -->
+                                                    <div class="newsletter">
+
+
+                                                                <h4>Sign up for our newsletter</h4>
+
+                                                                <form class="newsletter-form">
+
+                                                                            <input type="text" class="email" placeholder="enter your email address" />
+                                                                            <input type="submit" class="submit" value="" >
+
+                                                                </form>
+                                                                <!-- end form -->
+
+                                                    </div>
+                                                    <!-- end newsletter -->
+
+
+
+                                            </div>
+                                            <!-- end widget content -->
+
+
+
+                                </div>
+                                <!-- end widget -->
+
+
+
+
+                                <!-- widget -->
+                                <div class="widget span4">
+
+
+                                            <h3>Twitter</h3>
+
+                                            <div class="widget-content">
+
+
+                                                        <!-- twitter -->
+                                                        <div class="twitter-wrapper">
+
+
+                                                                        <div class="tweet">
+
+
+                                                                                <p><a href="#">@Mocha</a> Our background is creative, we love open source, we believe that work is about way more than just making money.</p>
+
+
+                                                                        </div>
+                                                                        <!-- end tweet -->
+
+
+                                                                        <div class="tweet">
+
+
+                                                                                <p><a href="#">@Mocha</a> We design for print, for web
+                                                                                and love nothing more than creating and developing brands <a href="#">http://themeforest.net</a>.</p>
+
+
+                                                                        </div>
+                                                                        <!-- end tweet -->
+
+
+                                                                        <div class="tweet">
+
+
+                                                                                <p><a href="#">@Mocha</a> We totally committed to making products that are awesome .</p>
+
+
+                                                                        </div>
+                                                                        <!-- end tweet -->
+
+
+                                                        </div>
+                                                        <!-- end twitter wrapper -->
+
+
+
+                                            </div>
+                                            <!-- end widget content -->
+
+
+                                </div>
+                                <!-- end widget -->
+
+
+                    </div>
+                    <!-- end widgets wrapper -->
+
+
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container -->
+
+
+    <!-- second container / copyrights -->
+    <div class="copyrights">
+
+                    <div class="container">
+                        <div class="row">
+
+
+                                <div class="copyrights-wrapper span12">
+
+
+                                    <!-- left copyrights -->
+                                    <div class="left-copyrights">
+
+                                        <p>MOCHA THEME. CREATED BY SUITSTHEME.</p>
+
+                                    </div>
+                                    <!-- end left copyrights -->
+
+
+
+                                    <!-- right menu -->
+                                    <div class="right-menu">
+
+
+                                            <ul>
+                                                    <li><a href="index.html">Home</a></li>
+                                                    <li><a href="page.html">About</a></li>
+                                                    <li><a href="portfolio.html">Portfolio</a></li>
+                                                    <li><a href="blog.html">Blog</a></li>
+                                                    <li><a href="contact.html">Contact</a></li>
+                                                </ul>
+
+
+
+                                    </div>
+                                    <!-- end right menu -->
+
+
+
+                                </div><!-- end span12 -->
+
+                        </div>
+                        <!-- end row -->
+                    </div>
+                    <!-- end container -->
+
+    </div>
+    <!-- end copyrights -->
+</footer>
+
+<!-- Javascript -->
+
+
+<script src="/static/js/mediaelement.min.js"></script>
+<script src="/static/js/jquery.flexslider-min.js"></script>
+<script src="/static/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="/static/js/jquery.carouFredSel-6.2.1-packed.js"></script>
+<script src="/static/js/isotope.js"></script>
+<script src="/static/js/jflickrfeed.js"></script>
+<script src="/static/js/custom.js"></script>
+
+</body>
+</html>
