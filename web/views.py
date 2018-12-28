@@ -16,10 +16,10 @@ def summary():
 
 def Paging(page=1, find=None):
     global allType
-
+    pageNum = 3
     context = {}
-    start = (page - 1) * 5
-    end = page * 5
+    start = (page - 1) * pageNum
+    end = page * pageNum
     data = find[start:end]
     for item in data:
         date = item.time.strftime("%Y-%m-%d").split('-')
@@ -28,11 +28,12 @@ def Paging(page=1, find=None):
             item.mon = Month[date[1]]
             item.day = date[2]
     dataLen = len(find)
-    pageCount, y = divmod(dataLen, 5)
+
+    pageCount, y = divmod(dataLen, pageNum)
     pageList = []
     if y:
         pageCount += 1
-    pageNum = 5
+
     if pageCount < pageNum:
         startIndex = 1
         endIndex = pageCount + 1

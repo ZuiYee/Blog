@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'imagekit',
     'web',
     'spider',
     'robot',
@@ -127,5 +128,10 @@ STATICFILES_DIRS = (
     ('js', os.path.join(STATIC_ROOT, 'js').replace('\\', '/')),
 )
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace('\\', '/')+'/'
+
 # DEBUG = False
 ALLOWED_HOSTS = ['47.100.118.242', '127.0.0.1', 'localhost ', 'zuiyee.online']
+
+

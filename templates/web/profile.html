@@ -10,9 +10,292 @@
 </head>
 <body>
 {% block content %}
-    <a>
-    111111
-    </a>
+
+<!-- page content -->
+<section class="page">
+
+            <div class="container">
+                        <div class="row">
+
+
+                        <!-- section title -->
+                        <div class="section-title span12">
+
+
+                                    <h2>Latest Blog</h2>
+
+                                    <a href="#" class="section-link">Go to blog</a>
+
+                        </div>
+                        <!-- end section title -->
+
+
+
+                        <!-- content / blog -->
+                        <div class="content-wrapper blog-grid">
+
+                                {% for item in find %}
+                                <div class="span4 blog-item">
+
+
+                                            <!-- post image -->
+                                            <div class="post-image">
+
+                                                <!-- image -->
+                                                <a href="{% url 'web:detail' item.id %}" class="image">
+{#                                                    <img src="{% static 'img/demo/blog1.png' %}" alt="Post Title">#}
+                                                        <img src="/media/{{ item.img }}" alt="Post Title">
+                                                </a>
+
+                                                <!-- end image -->
+
+
+                                                <!-- icon -->
+                                                <a href="#" class="icon"></a>
+
+                                            </div>
+                                            <!-- end post image -->
+
+
+                                            <!-- post excerpt -->
+                                            <div class="post-excerpt">
+
+                                                    <h4><a href="{% url 'web:detail' item.id %}">{{ item.title }}</a></h4>
+
+                                                        <p>{{ item.abstract }}</p>
+
+                                            </div>
+                                            <!-- end post excerpt -->
+
+
+                                </div>
+                                <!-- end blog item -->
+                                {% endfor %}
+
+
+
+
+
+
+{#                                <div class="span4 blog-item">#}
+{##}
+{##}
+{#                                            <!-- post image -->#}
+{#                                            <div class="post-image">#}
+{##}
+{#                                                <!-- image -->#}
+{#                                                <a href="#" class="image">#}
+{#                                                    <img src="{% static 'img/demo/blog2.png' %}" alt="Post Title">#}
+{#                                                </a>#}
+{#                                                <!-- end image -->#}
+{##}
+{##}
+{#                                                <!-- icon -->#}
+{#                                                <a href="#" class="icon"></a>#}
+{##}
+{#                                            </div>#}
+{#                                            <!-- end post image -->#}
+{##}
+{##}
+{#                                            <!-- post excerpt -->#}
+{#                                            <div class="post-excerpt">#}
+{##}
+{#                                                    <h4><a href="#">Vulputate cursus a sit amet mauris odio.</a></h4>#}
+{##}
+{#                                                        <p>#}
+{#                                                                Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi accumsan ipsum velit.#}
+{#                                                        </p>#}
+{##}
+{#                                            </div>#}
+{#                                            <!-- end post excerpt -->#}
+{##}
+{##}
+{#                                </div>#}
+{#                                <!-- end blog item -->#}
+{##}
+{##}
+{##}
+{##}
+{#                                <div class="span4 blog-item">#}
+{##}
+{##}
+{#                                            <!-- post image -->#}
+{#                                            <div class="post-image">#}
+{##}
+{#                                                <!-- image -->#}
+{#                                                <a href="#" class="image">#}
+{#                                                    <img src="{% static 'img/demo/blog3.png' %}" alt="Post Title">#}
+{#                                                </a>#}
+{#                                                <!-- end image -->#}
+{##}
+{##}
+{#                                                <!-- icon -->#}
+{#                                                <a href="#" class="icon"></a>#}
+{##}
+{#                                            </div>#}
+{#                                            <!-- end post image -->#}
+{##}
+{##}
+{#                                            <!-- post excerpt -->#}
+{#                                            <div class="post-excerpt">#}
+{##}
+{#                                                    <h4><a href="#">Odio tincidunt auctor ornare amet accumsan.</a></h4>#}
+{##}
+{#                                                        <p>#}
+{#                                                                Proin gravida nibh vel velit auctor aliquet. Aenean solcitudin lorem bibendum auctor, nisi elit conec sagittis sem nibh id elit.#}
+{#                                                        </p>#}
+{##}
+{#                                            </div>#}
+{#                                            <!-- end post excerpt -->#}
+{##}
+{##}
+{#                                </div>#}
+{#                                <!-- end blog item -->#}
+
+
+
+
+                        </div>
+                        <!-- end content wrapper -->
+
+
+
+                </div>
+                <!-- end row -->
+            <div class="paginationNew ">
+                <ul class="pageSelected">
+                    {{ pageStr }}
+                </ul>
+            </div>
+
+
+            </div>
+            <!-- end container -->
+
+
+</section>
+<!-- end page content -->
+
+
+<div class="copyrights"></div>
+<section class="portfolio-wrapper alt-section">
+
+
+            <div class="container">
+                <div class="row home-portfolio-wrapper">
+
+
+                            <!-- section title -->
+                            <div class="section-title span12">
+
+
+                                        <h2>I Like</h2>
+
+                                        <a href="#" class="section-link">Go to Collection</a>
+
+                            </div>
+                            <!-- end section title -->
+
+
+                            <div class="home-portfolio-pagination">
+                                                <a href="#" class="prev"></a>
+                                                <a href="#" class="next"></a>
+
+
+                            </div>
+
+                             <div class="clearfix"></div>
+
+
+                            <!-- portfolio items -->
+                            <div class="portfolio-slider content-wrapper">
+
+
+                                    <!-- portfolio item -->
+                                    <div class="span6 portfolio-item">
+
+
+                                            <!-- image -->
+{#                                            <a href="portfolio-single.html" class="image">#}
+                                            <a href="#" class="image">
+                                                <img src="{% static 'img/demo/portfolio1.png' %}" alt="Brain Surgery">
+                                            </a>
+                                            <!-- end image -->
+
+
+                                            <!-- title -->
+                                            <a href="#" class="title">Brain Surgery <br /> <span class="meta">Graphic Design , Illustration</span></a>
+
+
+                                            <!-- icon -->
+                                            <a href="#" class="icon"></a>
+
+
+                                    </div>
+                                    <!-- end portfolio item -->
+
+
+                                    <!-- portfolio item -->
+                                    <div class="span6 portfolio-item">
+
+
+                                            <!-- image -->
+                                            <a href="#" class="image">
+                                                <img src="{% static 'img/demo/portfolio2.png' %}" alt="Web Design">
+                                            </a>
+                                            <!-- end image -->
+
+
+                                            <!-- title -->
+                                            <a href="#" class="title">Web Design <br /> <span class="meta">Graphic Design , Illustration</span></a>
+
+                                            <!-- icon -->
+                                            <a href="#" class="icon"></a>
+
+
+                                    </div>
+                                    <!-- end portfolio item -->
+
+
+
+
+                                    <!-- portfolio item -->
+                                    <div class="span6 portfolio-item">
+
+
+                                            <!-- image -->
+                                            <a href="#" class="image">
+                                                <img src="{% static 'img/demo/portfolio3.png' %}" alt="Web Design">
+                                            </a>
+                                            <!-- end image -->
+
+
+                                            <!-- title -->
+                                            <a href="#" class="title">Web Design <br /> <span class="meta">Graphic Design , Illustration</span></a>
+
+
+                                            <!-- icon -->
+                                            <a href="#" class="icon"></a>
+
+
+                                    </div>
+                                    <!-- end portfolio item -->
+
+
+
+                            </div>
+                            <!-- end portfolio items -->
+
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+
+
+</section>
+<!-- end portfolio -->
+
+
 {% endblock %}
 {#        {% for item in find %}#}
 {#        <div class="post image">#}

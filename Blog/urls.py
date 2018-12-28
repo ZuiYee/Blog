@@ -20,7 +20,8 @@ from . import views
 from web.views import profile
 from spider.views import mainspider
 from robot.views import myrobot
-
+from django.views.static import serve
+from django.conf import settings
 
 
 urlpatterns = [
@@ -31,5 +32,7 @@ urlpatterns = [
     url(r'^myrobot/', myrobot, name='myrobot'),
     url(r'^web/', include('web.urls')),
     url(r'^spider/', include('spider.urls')),
-    url(r'^robot/', include('robot.urls'))
+    url(r'^robot/', include('robot.urls')),
+    url(r"^media/(?P<path>.*)$", serve,  {"document_root": settings.MEDIA_ROOT, }),
 ]
+
