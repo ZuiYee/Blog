@@ -87,6 +87,16 @@ def Type(request, type):
     find = Article.objects.filter(type=type)
     if find:
         context = Paging(1, find)
+        allArticle = Article.objects.all()
+        recentFind = []
+        recentFind.append(allArticle.last())
+        x = allArticle.filter(pk=allArticle.last().pk - 1)
+        if x:
+            recentFind.append(allArticle.filter(pk=allArticle.last().pk - 1)[0])
+        y = allArticle.filter(pk=allArticle.last().pk - 2)
+        if y:
+            recentFind.append(allArticle.filter(pk=allArticle.last().pk - 2)[0])
+        context['recentFind'] = recentFind
         return render(request, 'web/blogHome.html', context)
     else:
         return render(request, 'web/error.html')
@@ -95,24 +105,24 @@ def Type(request, type):
 def profile(request):
     global allType, find
     context = {}
-    # if request.method == 'POST':
-    #     if request.POST.get("type"):
-    #         return Type(request, request.POST.get("type"))
-    # if request.method == 'GET':
-        # if request.GET.get("s"):
-        #     find = Article.objects.filter(title__contains=request.GET.get("s"))
-        #     if find:
-        #         context = Paging(1, find)
-        #         return render(request, 'web/profile.html', context)
-        #     else:
-        #         return render(request, 'web/error.html')
-        # if request.GET.get("p"):
-        #     page = int(request.GET.get("p", 1))
-        #     context = Paging(page, find)
-        #
-        #     return render(request, 'web/profile.html', context)
+    if request.method == 'POST':
+        if request.POST.get("type"):
+            return Type(request, request.POST.get("type"))
+    if request.method == 'GET':
+        if request.GET.get("s"):
+            find = Article.objects.filter(title__contains=request.GET.get("s"))
+            if find:
+                context = Paging(1, find)
+                return render(request, 'web/profile.html', context)
+            else:
+                return render(request, 'web/error.html')
+        if request.GET.get("p"):
+            page = int(request.GET.get("p", 1))
+            context = Paging(page, find)
 
-    # summary()
+            return render(request, 'web/profile.html', context)
+
+    summary()
     find = Article.objects.all()
     newfind = []
     newfind.append(find.last())
@@ -146,6 +156,16 @@ def detail(request, key):
             find.day = date[2]
         context['allType'] = allType
         context['find'] = find
+        allArticle = Article.objects.all()
+        recentFind = []
+        recentFind.append(allArticle.last())
+        x = allArticle.filter(pk=allArticle.last().pk - 1)
+        if x:
+            recentFind.append(allArticle.filter(pk=allArticle.last().pk - 1)[0])
+        y = allArticle.filter(pk=allArticle.last().pk - 2)
+        if y:
+            recentFind.append(allArticle.filter(pk=allArticle.last().pk - 2)[0])
+        context['recentFind'] = recentFind
         return render(request, 'web/detail.html', context)
     else:
         return render(request, 'web/error.html')
@@ -168,21 +188,31 @@ def blogHome(request):
         if request.GET.get("p"):
             page = int(request.GET.get("p", 1))
             context = Paging(page, find)
+            allArticle = Article.objects.all()
+            recentFind = []
+            recentFind.append(allArticle.last())
+            x = allArticle.filter(pk=allArticle.last().pk - 1)
+            if x:
+                recentFind.append(allArticle.filter(pk=allArticle.last().pk - 1)[0])
+            y = allArticle.filter(pk=allArticle.last().pk - 2)
+            if y:
+                recentFind.append(allArticle.filter(pk=allArticle.last().pk - 2)[0])
+            context['recentFind'] = recentFind
             return render(request, 'web/blogHome.html', context)
     summary()
 
     find = Article.objects.all()
-    newfind = []
-    newfind.append(find.last())
+    recentFind = []
+    recentFind.append(find.last())
     x = find.filter(pk=find.last().pk - 1)
     if x:
-        newfind.append(find.filter(pk=find.last().pk - 1)[0])
+        recentFind.append(find.filter(pk=find.last().pk - 1)[0])
     y = find.filter(pk=find.last().pk - 2)
     if y:
-        newfind.append(find.filter(pk=find.last().pk - 2)[0])
+        recentFind.append(find.filter(pk=find.last().pk - 2)[0])
     if find:
         context = Paging(1, find)
-        context['newfind'] = newfind
+        context['recentFind'] = recentFind
         return render(request, 'web/blogHome.html', context)
     else:
         return render(request, 'web/error.html')
