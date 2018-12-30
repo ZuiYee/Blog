@@ -1,3 +1,5 @@
+{% extends 'web/base.html' %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,8 +7,30 @@
     <title>Spider</title>
 </head>
 <body>
-    <div><a href="{% url 'index' %}">返回</a> </div>
-    <div><a href="{% url 'spider:EducationSpider' %}">EducationSpider</a> </div>
-    <div><a href="{% url 'spider:TestSpider' %}">TestSpider</a> </div>
+{% block content %}
+    <div class="page">
+        <div class="container">
+            <div class="row">
+                <div class="section-title span12">
+                    <h2>Spider</h2>
+                </div>
+                <div class="content-wrapper blog-grid">
+                    <div class="span6 blog-item">
+                        <ul>
+                            <li>
+                                <a href="{% url 'spider:EducationSpider' %}"><h3>EducationSpider</h3></a>
+                            </li>
+                            <li>
+                                <a href="{% url 'spider:TestSpider' %}"><h3>TestSpider</h3></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
 </body>
 </html>

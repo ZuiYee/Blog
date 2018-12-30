@@ -36,7 +36,7 @@
         <div class="row">
             <div class="span12">
                     <div class="logo">
-                            <a href="{% url 'web:profile' %}"><img src="{% static 'img/logo.png' %}" alt="Mocha"></a>
+                            <a href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}" alt="Mocha"></a>
                     </div>
                     <!-- end logo -->
 
@@ -45,10 +45,10 @@
                     <nav class="menu">
                         <ul>
                             <li class="toggle"><a href="#">Menu</a></li>
-                            <li><a href="{% url 'web:profile' %}">Home</a></li>
+                            <li><a href="{% url 'index' %}">Home</a></li>
                             <li><a href="#">About</a></li>
 {#                            <li><a href="page.html">About</a></li>#}
-                            <li><a href="#">Photo</a>
+                            <li><a href="{% url 'spider:mainspider' %}">Spider</a>
 {#                                <a href="portfolio.html">Portfolio</a>#}
 {#                                <ul>#}
 {#                                    <li><a href="portfolio.html">Portfolio Three Columns</a></li>#}

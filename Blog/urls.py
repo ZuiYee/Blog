@@ -8,10 +8,9 @@ from robot.views import myrobot
 from django.views.static import serve
 from django.conf import settings
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^$', views.index, name='index'),
+    url(r'^$', profile, name='index'),
     url(r'^profile/', profile, name='profile'),
     url(r'^mainspider/', mainspider, name='mainspider'),
     url(r'^myrobot/', myrobot, name='myrobot'),
