@@ -1,20 +1,40 @@
+{% extends 'web/base.html' %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Result</title>
+    <title>SpiderResult</title>
 </head>
 <body>
-    <div><a href="{% url 'spider:mainspider' %}">返回</a> </div>
-    {% if pageStr %}
-        <table>
-            <tbody>
-                {{ pageStr }}
-            </tbody>
-        </table>
-    {% else%}
-        <h3>账号或密码错误，请重试</h3>
-    {% endif %}
+{% block content %}
+    <div class="page">
+        <div class="container">
+            <div class="row">
+                <div class="section-title span12">
+                    <h2>SpiderResult</h2>
+                    <a href="{% url 'spider:mainspider' %}" class="section-link">返回</a>
+                </div>
+                <div class="content-wrapper blog-grid">
+                    <div class="span6 blog-item" style="margin:0 0 200px">
+                        {% if pageStr %}
+                            <table>
+                                <tbody>
+                                    {{ pageStr }}
+                                </tbody>
+                            </table>
+                        {% else%}
+                            <h3>账号或密码错误，请重试</h3>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+
+
+
+{% endblock %}
 </body>
 </html>
