@@ -16,7 +16,7 @@ def TestSpider1(request, username, password):
     chromeOption.add_argument('blink-settings=imagesEnabled=false')  # 不加载图片, 提升速度
     chromeOption.add_argument('--headless')  # 浏览器不提供可视化页面. linux下如果系统不支持可视化不加这条会启动失败
 
-    browser = webdriver.Chrome(executable_path='/home/admin/driver/chromedriver', options=chromeOption)
+    browser = webdriver.Chrome(executable_path='E:\Blog\chrome\chromedriver.exe', options=chromeOption)
     browser.get('http://zf.ahu.cn/')
     browser.implicitly_wait(10)  # 等待网页加载
     browser.find_element_by_id('username').clear()
@@ -71,7 +71,7 @@ def EducationSpider1(request, username, password):
     chromeOption.add_argument('blink-settings=imagesEnabled=false')  # 不加载图片, 提升速度
     chromeOption.add_argument('--headless')  # 浏览器不提供可视化页面. linux下如果系统不支持可视化不加这条会启动失败
 
-    browser = webdriver.Chrome(executable_path='/home/admin/driver/chromedriver', options=chromeOption)
+    browser = webdriver.Chrome(executable_path='E:\Blog\chrome\chromedriver.exe', options=chromeOption)
     browser.get('http://zf.ahu.cn/')
     browser.implicitly_wait(10)  # 等待网页加载
     browser.find_element_by_id('username').clear()
