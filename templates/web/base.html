@@ -46,19 +46,15 @@
                         <ul>
                             <li class="toggle"><a href="#">Menu</a></li>
                             <li><a href="{% url 'index' %}">Home</a></li>
-                            <li><a href="#">About</a></li>
-{#                            <li><a href="page.html">About</a></li>#}
+                            <li><a href="{% url 'web:about' %}">About</a></li>
                             <li><a href="{% url 'spider:mainspider' %}">Spider</a>
-{#                                <a href="portfolio.html">Portfolio</a>#}
-{#                                <ul>#}
-{#                                    <li><a href="portfolio.html">Portfolio Three Columns</a></li>#}
-{#                                    <li><a href="portfolio-single.html">Portfolio Single Page</a></li>#}
-{#                                </ul>#}
+                                <ul>
+                                    <li><a href="{% url 'spider:EducationSpider' %}">EducationSpider</a></li>
+                                    <li><a href="{% url 'spider:TestSpider' %}">TestSpider</a></li>
+                                </ul>
                             </li>
                             <li><a href="{% url 'web:blogHome' %}">Blog</a></li>
-{#                            <li><a href="blog.html">博客</a></li>#}
                             <li><a href="#">Contact</a></li>
-{#                            <li><a href="contact.html">联系</a></li>#}
                         </ul>
                     </nav>
                     <!-- end nav -->

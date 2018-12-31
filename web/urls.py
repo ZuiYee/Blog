@@ -12,7 +12,8 @@ app_name = 'web'
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^profile/', views.profile, name='profile'),
-    url(r'^blogHome/$', views.blogHome, name='blogHome'),
+    url(r'^blogHome/', views.blogHome, name='blogHome'),
+    url(r'^about/', views.about, name='about'),
     url(r'^detail/(?P<key>.*?)$', views.detail, name='detail'),
 
 ]

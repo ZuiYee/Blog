@@ -34,7 +34,7 @@ def summary():
     return allType
 
 
-def Paging(page=1, find=None, articleType=None):
+def Paging(page, find, articleType=None):
     pageNum = 3
     context = {}
     start = (page - 1) * pageNum
@@ -199,20 +199,14 @@ def blogHome(request):
             else:
                 return render(request, 'web/error.html')
         if request.GET.get("p"):
-            if request.GET["type"]:
-                page = int(request.GET.get("p", 1))
-                print(page, request.GET["type"])
-                Type(request, page, request.GET["type"])
-                # context = Paging(page, find)
-                # allArticle = Article.objects.all()
-                # recentFind = recent()
-                # context['recentFind'] = recentFind
-                # return render(request, 'web/blogHome.html', context)
-            else:
+            try:
+                if request.GET["type"]:
+                    page = int(request.GET.get("p", 1))
+                    return Type(request, page, request.GET["type"])
+            except:
                 page = int(request.GET.get("p", 1))
                 find = Article.objects.all()
                 context = Paging(page, find)
-                allArticle = Article.objects.all()
                 recentFind = recent()
                 context['recentFind'] = recentFind
                 return render(request, 'web/blogHome.html', context)
@@ -225,3 +219,7 @@ def blogHome(request):
         return render(request, 'web/blogHome.html', context)
     else:
         return render(request, 'web/error.html')
+
+
+def about(request):
+    return render(request, 'web/about.html')
