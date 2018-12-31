@@ -167,7 +167,7 @@
                                                 <div class="widget-content">
                                                         {% for item in recentFind %}
                                                         <div class="recent-post-tab">
-                                                                <span>13 August 2013</span>
+                                                                <span>{{ item.day }} {{ item.mon }} {{ item.year }}</span>
                                                                 <a href="{% url 'web:detail' item.id %}">{{ item.title }}</a>
                                                         </div>
                                                         {% endfor %}
