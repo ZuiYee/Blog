@@ -2778,13 +2778,16 @@ footer .widget h4 {
     }
 
     header .logo a {
-      width: 100%;
       top: -35%;
+      width: 300px;
+      height: 100px;
       text-align: center;
     }
 
     header .logo a img {
       top: -35%;
+      width: 300px;
+      height: 100px;
       text-align: center; display: inline-block;
     }
 
