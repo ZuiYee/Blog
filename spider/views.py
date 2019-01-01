@@ -4,7 +4,6 @@ from selenium.webdriver.support.ui import Select
 from pyquery import PyQuery as pq
 from django.utils.safestring import mark_safe
 import time
-
 from spider.spiderClass import *
 
 
