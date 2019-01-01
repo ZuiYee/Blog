@@ -93,7 +93,6 @@ def EducationSpider1(request, username, password):
     pageStr = "".join(pageList)
     pageStr = mark_safe(pageStr)
     context['pageStr'] = pageStr
-
     browser.close()  # 关闭浏览器
     return render(request, 'spider/SpiderResult.html', context)
 
