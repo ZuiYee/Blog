@@ -35,6 +35,7 @@ def summary():
 
 
 def Paging(page, find, articleType=None):
+
     pageNum = 3
     context = {}
     start = (page - 1) * pageNum
