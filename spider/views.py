@@ -141,3 +141,6 @@ def bodySpider():
     #             # print(index)
     #             # print(kssj, jssj, xqj, sdj, dsz)
     #             html = spider.get_empty_room(kssj, jssj, xqj, sdj, dsz)
+
+
+
