@@ -106,41 +106,58 @@ def EducationSpider(request):
 def mainspider(request):
     return render(request, 'spider/index.html')
 
-def bodySpider():
-    spider = Spider('http://jw3.ahu.cn')
-    xh = 'E31614002'
-    password = 'wang921207'
-    spider.login(xh, password)
+def SchoolSpider(request):
+    if request.method == 'POST':
+        spider = Spider('http://jw3.ahu.cn')
+        xh = request.POST.get("username")
+        password = request.POST.get("password")
+        print(xh, password)
+        if xh and password:
+            spider.login(xh, password)
+            # spider.getScore()
+            return render(request, 'spider/SpiderResult.html')
 
-    kssj = '117'
-    jssj = '117'
-    xqj = '1'
-    sdj = "'7'|'0','0','5','7','0','0','0','0','0'"
-    for num in classnum_dict:
-        useromm_dict = {
-            'ClassRoomName': num,
-        }
-        jsbh = classnum_dict[num]
-        data_list = spider.get_useroom(kssj, jssj, xqj,  sdj, jsbh)
-        useromm_dict['data'] = data_list
-        # 存储数据
-        # mycol.insert_one(useromm_dict)
+        else:
+            print("No name or password!")
 
 
 
+        # spider = Spider('http://jw3.ahu.cn')
+        # xh = 'E31614002'
+        # password = 'wang921207'
+        # spider.login(xh, password)
+        #
+        # kssj = '117'
+        # jssj = '117'
+        # xqj = '1'
+        # sdj = "'7'|'0','0','5','7','0','0','0','0','0'"
+        # for num in classnum_dict:
+        #     useromm_dict = {
+        #         'ClassRoomName': num,
+        #     }
+        #     jsbh = classnum_dict[num]
+        #     data_list = spider.get_useroom(kssj, jssj, xqj,  sdj, jsbh)
+        #     useromm_dict['data'] = data_list
+            # 存储数据
+            # mycol.insert_one(useromm_dict)
 
-    # for week in range(17, 19):  # 爬取17-18周
-    #     djz = str(week)
-    #     dsz = dsz_dict[str(week % 2)]
-    #     for day in range(1, 8):  # 周一到周末
-    #         xqj = str(day)
-    #         for index in sdj_dict:  # 从早到晚
-    #             sdj = sdj_dict[index]
-    #             kssj = xqj + djz
-    #             jssj = xqj + djz
-    #             # print(index)
-    #             # print(kssj, jssj, xqj, sdj, dsz)
-    #             html = spider.get_empty_room(kssj, jssj, xqj, sdj, dsz)
+
+
+
+        # for week in range(17, 19):  # 爬取17-18周
+        #     djz = str(week)
+        #     dsz = dsz_dict[str(week % 2)]
+        #     for day in range(1, 8):  # 周一到周末
+        #         xqj = str(day)
+        #         for index in sdj_dict:  # 从早到晚
+        #             sdj = sdj_dict[index]
+        #             kssj = xqj + djz
+        #             jssj = xqj + djz
+        #             # print(index)
+        #             # print(kssj, jssj, xqj, sdj, dsz)
+        #             html = spider.get_empty_room(kssj, jssj, xqj, sdj, dsz)
+
+    return render(request, 'spider/SchoolSpider.html')
 
 
 

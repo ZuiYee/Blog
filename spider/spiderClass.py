@@ -1,17 +1,16 @@
+#!/usr/bin/env python
+
 import base64
 import re
 from urllib.parse import urlencode
-
+from urllib import parse
 import requests
 from bs4 import BeautifulSoup
 import http.cookiejar
 from pyquery import PyQuery as pq
 from ZFCheckCode import recognizer
+from .models import Score
 
-
-# myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-# mydb = myclient["classroom"]
-# mycol = mydb["bonan"]
 
 sdj_dict = {
     # 上午12节
@@ -131,6 +130,147 @@ classnum_dict = {
                  # '人文楼C507': '110C0507', '戏剧影视厅（黑匣子）': '1220006'
 }
 
+class Parse:
+    def __init__(self, data, xh):
+        self.data = data
+        self.xh = xh
+
+    def get_grades(self):
+        try:
+            coded_data = re.findall(r'b<.*?>', self.data)[0][2:-1]
+            encodestr = base64.b64decode(str.encode(coded_data))
+            score_string = encodestr.decode('utf-8', 'ignore')
+            soup = BeautifulSoup(score_string, "lxml")
+            score_list = []
+            tables = soup.findAll('table')
+
+
+            for item in tables:
+                try:
+                    score_dict = {}
+                    item_string = str(item)
+                    score_dict['course'] = item.kcmc.contents[0]
+                    # if '足球-俱乐部制-男' in score_dict['course']:
+                    #     print(item)
+                    if 'pscj' in item_string:
+                        score_dict['daily_score'] = item.pscj.contents[0]
+                    elif 'sycj' in item_string:
+                        score_dict['daily_score'] = item.sycj.contents[0]
+                    if 'qmcj' in item_string:
+                        score_dict['test_score'] = item.qmcj.contents[0]
+                    elif 'sycj' in item_string:
+                        score_dict['test_score'] = item.sycj.contents[0]
+                    try:
+                        score_dict['daily_score']
+                        score_dict['test_score']
+                    except:
+                        score_dict['daily_score'] = item.zscj.contents[0]
+                        score_dict['test_score'] = item.zscj.contents[0]
+
+                    if 'qzcj' in item_string:
+                        qzcj = item.qzcj.contents[0]
+                        score_dict['test_score'] = '(' + qzcj + ')' + score_dict['test_score']
+
+                    score_dict['final_score'] = item.zscj.contents[0]
+
+                    score = Score()
+                    score.code = item.kcdm.contents[0]
+                    score.xh = self.xh
+                    # score.xh = encode(self.xh)
+                    score.name = item.kcmc.contents[0]
+                    score.category = item.kcxz.contents[0]
+                    score.xf = item.xf.contents[0]
+                    score.daily_score = score_dict['daily_score']
+                    score.test_score = score_dict['test_score']
+                    score.final_score = score_dict['final_score']
+                    try:
+                        score.source = item.xymc.contents[0]
+                    except:
+                        pass
+
+                    try:
+                        score.save()
+                    except:
+                        pass
+                    score_list.append(score_dict)
+                except:
+                    pass
+                # score.save()
+                # many to many
+                # prerequisite: two objects already exists
+                # Face error directly, think about it.
+                # user = AHUUser.objects.filter(number=self.xh)[0]
+                # score.number.add(user)
+                # score.save()
+        except:
+            score_list = []
+        return score_list
+
+        # p1 = re.compile(r';l<(.*?);>>;>;;>;', re.S)
+        # data1 = re.findall(p1, self.data)
+        # data2 = [i for i in data1 if ((len(i) <= 30) & (len(i) >= 2))]  # 删除过长元素
+        # # print(data1)
+        # # print("________")
+        # pattern1 = re.compile(r'[o<](.*?)[>]')
+        # pattern2 = re.compile(r'&(.*?)\\')
+        # pattern3 = re.compile(r'\\(.*?)e')
+        # data3 = [unit for unit in data2 if
+        #          ((pattern1.match(unit) == None) and (pattern2.match(unit) == None) and (pattern3.match(unit) == None))]
+        # data4 = data3[8:-2]
+        # while "理论课" in data4:
+        #     data4.remove("理论课")
+        # for i in range(len(data4)):
+        #     if ((data4[i] == "体育军事教学部") or (data4[i] == "教务处") or (data4[i] == "大学外语教学部")):
+        #         data4[i] = data4[i - 1]
+        #     data4[i] = data4[i].lstrip()
+        #     if (i + 2 <= len(data4)):
+        #         if ((data4[i] == "素质教育选修课") & (data4[i + 1] == "素质教育选修课")):
+        #             data4.remove(data4[i])
+        #     if i + 1 == len(data4):
+        #         break
+        # pattern4 = re.compile(r'\d[.]\d')
+        # data5 = []
+        # # print(data4)
+        # for i in range(len(data4)):
+        #     if i + 4 == len(data4):
+        #         break
+        #     if data4[i][0] >= 'A' and data4[i][0] <= 'Z' and data4[i][2].isdigit():
+        #         data5.append(data4[i + 1])
+        #     if ((pattern4.match(data4[i]) != None) & (pattern4.match(data4[i + 1]) != None)):
+        #         data5.append(data4[i + 2])
+        #         data5.append(data4[i + 3])
+        #         data5.append(data4[i + 4])
+        #     if ((pattern4.match(data4[i - 1]) == None) & (pattern4.match(data4[i]) != None) & (
+        #             pattern4.match(data4[i + 1]) == None)):
+        #         data5.append(data4[i + 1])
+        #         j = 0
+        #         while (True):
+        #             if i + j == len(data4):
+        #                 break
+        #             if (data4[i + j][0] >= 'A' and data4[i + j][0] <= 'Z' and data4[i + j][2].isdigit()) == False:
+        #                 j = j + 1
+        #             else:
+        #                 break
+        #         data5.append(data4[i + j - 4])
+        #         data5.append(data4[i + j - 3])
+        #         # print(data5)
+        # score_list = []
+        # for i in range(1, int(len(data5) / 4) + 1):
+        #     score_dict = {}
+        #     score_dict['course'] = data5[(i - 1) * 4]
+        #     score_dict['daily_score'] = data5[(i - 1) * 4 + 1]
+        #     score_dict['test_score'] = data5[(i - 1) * 4 + 2]
+        #     score_dict['final_score'] = data5[(i - 1) * 4 + 3]
+        #     model_grade = Top()
+        #     model_grade.course = score_dict['course']
+        #     model_grade.daily_score = score_dict['daily_score']
+        #     model_grade.test_score = score_dict['test_score']
+        #     model_grade.final_score = score_dict['final_score']
+        #     model_grade.belongs_to = Auser.objects.filter(number=self.xh)[0]
+        #     model_grade.save()
+        #     score_list.append(score_dict)
+        # return score_list
+
 class Spider:
 
     def __init__(self, url):
@@ -207,6 +347,149 @@ class Spider:
             }
         loginPage = self.session.post(self.postUrl, data=postData, headers=self.headers)
         self.session.cookies.save()
+
+    def getInfo(self):
+        infoUrl = self.Url + '/xsgrxx.aspx?xh=' + self.xh + '&'
+        self.session.headers['Referer'] = self.Url + '/xs_main.aspx?xh=' + self.xh
+        res = self.session.get(infoUrl)
+        handler = info_Handler(res.text)
+        self.name = handler.getInfo('name')
+        self.xm = parse.quote(self.name.encode('gb2312'))
+
+    def getCourseSchedule(self):
+        # 03
+        # csUrl = self.Url + '/xskbcx.aspx?xh=' + self.xh + '&xm=' + self.xm + '&gnmkdm=N121615'
+        csUrl = self.Url + '/xsxkqk.aspx?xh=' + self.xh
+        res = self.session.get(csUrl, headers=self.headers)
+        soup = BeautifulSoup(res.text, 'html.parser')
+        viewstate = soup.find('input', attrs={'name': '__VIEWSTATE'})['value']
+        postData = {
+            '__EVENTARGUMENT': '',
+            '__EVENTTARGET': 'ddlXQ',
+            '__VIEWSTATE': viewstate,
+            'ddlXN': '2018-2019',
+            'ddlXQ': '1',
+        }
+        res = self.session.post(csUrl, data=postData, headers=self.headers)
+
+        res.encoding = 'gb2312'
+        handler = courseSchedule_Handler(res.text)
+        course = handler.handleCourse(res.text)
+        # course = handleCourse(res.text)
+        return course
+
+    def getScore(self):
+        # get Score
+        # try:
+        scoreUrl = self.Url + '/xscjcx.aspx?xh=' + self.xh + '&xm=' + '%CD%F5%D3%E5%B4%A8' + '&gnmkdm=N121605'
+        print(scoreUrl)
+        headers1 = {
+            'Referer': 'http://jw3.ahu.cn/xs_main.aspx?xh=E31614002',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
+
+        }
+        # self.session.headers['Referer'] = 'http://jw3.ahu.cn/xs_main.aspx?xh=E31614002'
+        res = self.session.get(scoreUrl, headers=headers1)
+        soup = BeautifulSoup(res.text, 'html.parser')
+        print(res.text)
+        # viewstate = soup.find('input', id='__VIEWSTATE').get('value')
+        # __VIEWSTATE = soup.find('input', attrs={'name': '__VIEWSTATE'})['value']
+
+        viewstate = soup.find('input', attrs={'name': '__VIEWSTATE'})['value']
+
+        # eventvalidation = soup.find('input', id='__EVENTVALIDATION').get('value')
+        postData = {
+            '__EVENTARGUMENT': '',
+            '__EVENTTARGET': '',
+            # '__EVENTVALIDATION': eventvalidation,
+            '__VIEWSTATE': viewstate,
+            'btn_zcj': u'历年成绩'.encode('gb2312', 'replace'),
+            'ddlXN': '',
+            'ddlXQ': '',
+            'ddl_kcxz': '',
+            'hidLanguage': ''
+        }
+        # except:
+        #     scoreUrl = self.Url + '/xscjcx_dq.aspx?xh=' + self.xh + '&xm=' + '%CD%F5%D3%E5%B4%A8' + '&gnmkdm=N121605'
+        #     self.session.headers['Referer'] = 'http://jw3.ahu.cn/xs_main.aspx?xh=E31614002'
+        #     res = self.session.get(scoreUrl)
+        #     soup = BeautifulSoup(res.text, 'html.parser')
+        #     # viewstate = soup.find('input', id='__VIEWSTATE').get('value')
+        #     # eventvalidation = soup.find('input', id='__EVENTVALIDATION').get('value')
+        #     viewstate = soup.find('input', attrs={'name': '__VIEWSTATE'})['value']
+        #     postData = {
+        #         '__EVENTARGUMENT': '',
+        #         '__EVENTTARGET': '',
+        #         # '__EVENTVALIDATION': eventvalidation,
+        #         '__LASTFOCUS': '',
+        #         '__VIEWSTATE': viewstate,
+        #         'btnCx': u' 查  询 '.encode('gb2312', 'replace'),
+        #         'ddlxn': u'全部'.encode('gb2312', 'replace'),
+        #         'ddlxq': u'全部'.encode('gb2312', 'replace')
+        #     }
+
+        res = self.session.post(scoreUrl, data=postData, headers=self.headers)
+        res.encoding = 'gb2312'
+        handler = score_Handler(res.text)
+        grades = handler.writeToFile('templates/score.html')
+        print('grades:', grades)
+        return grades
+
+    def getHiddenScore(self):
+        try:
+            scoreUrl = self.Url + '/xscjcx.aspx?xh=' + self.xh
+            self.session.headers['Referer'] = scoreUrl
+            res = self.session.get(scoreUrl)
+            soup = BeautifulSoup(res.text, 'html.parser')
+            # viewstate = soup.find('input', id='__VIEWSTATE').get('value')
+            # __VIEWSTATE = soup.find('input', attrs={'name': '__VIEWSTATE'})['value']
+
+            viewstate = soup.find('input', attrs={'name': '__VIEWSTATE'})['value']
+
+            # eventvalidation = soup.find('input', id='__EVENTVALIDATION').get('value')
+            postData = {
+                '__EVENTARGUMENT': '',
+                '__EVENTTARGET': '',
+                # '__EVENTVALIDATION': eventvalidation,
+                '__VIEWSTATE': viewstate,
+                'btn_zcj': u'历年成绩'.encode('gb2312', 'replace'),
+                'ddlXN': '',
+                'ddlXQ': '',
+                'ddl_kcxz': '',
+                'hidLanguage': ''
+            }
+        except:
+            scoreUrl = self.Url + '/xscjcx_dq.aspx?xh=' + self.xh
+            self.session.headers['Referer'] = scoreUrl
+            res = self.session.get(scoreUrl)
+            soup = BeautifulSoup(res.text, 'html.parser')
+            # viewstate = soup.find('input', id='__VIEWSTATE').get('value')
+            # eventvalidation = soup.find('input', id='__EVENTVALIDATION').get('value')
+            viewstate = soup.find('input', attrs={'name': '__VIEWSTATE'})['value']
+            postData = {
+                '__EVENTARGUMENT': '',
+                '__EVENTTARGET': '',
+                # '__EVENTVALIDATION': eventvalidation,
+                '__LASTFOCUS': '',
+                '__VIEWSTATE': viewstate,
+                'btnCx': u' 查  询 '.encode('gb2312', 'replace'),
+                'ddlxn': u'全部'.encode('gb2312', 'replace'),
+                'ddlxq': u'全部'.encode('gb2312', 'replace')
+            }
+        res = self.session.post(scoreUrl, data=postData, headers=self.headers)
+        score_soup = BeautifulSoup(res.text, 'html.parser')
+        viewstate = score_soup.find('input', attrs={'name': '__VIEWSTATE'})['value']
+        encodestr = base64.b64decode(str.encode(viewstate))
+        decoded = encodestr.decode('utf-8', 'ignore')
+
+
+        # start = time.clock()
+        parse = Parse(decoded, self.xh)
+        grades = parse.get_grades()
+        # 效率问题的疑问
+        # elapsed = (time.clock() - start)
+
+        return grades
 
 
     def get_empty_room(self, kssj, jssj, xqj, sdj, dsz):
@@ -327,8 +610,6 @@ class Spider:
 
         }
         data_gb2312 = urlencode(postData, encoding='gb2312')
-        # print(data_gb2312)
-        # print(postData)
         self.headers['Referer'] = 'http://jw3.ahu.cn/xxjsjy.aspx?xh=E31614002&xm=%CD%F5%D3%E5%B4%A8&gnmkdm=N121611'
         # self.headers['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
@@ -412,6 +693,450 @@ class Spider:
             print(data)
         return data_list
 
+import ast
+import re
+import json
 
+def out(info):
+    name = info[0]
+    position = info[3]
+    ls = info[2]
+    start_number = info[5]
+    week_day = info[4]
+    if '周一' in info[1]:
+        week_day = 1
+    elif '周二' in info[1]:
+        week_day = 2
+
+    elif '周三' in info[1]:
+        week_day = 3
+    elif '周四' in info[1]:
+        week_day = 4
+    elif '周五' in info[1]:
+        week_day = 5
+    elif '周六' in info[1]:
+        week_day = 6
+    elif '周七' in info[1]:
+        week_day = 7
+    if info[1][0] != '{':
+        number = []
+        tmp = ''
+        for i in info[1]:
+            if i.isdigit():
+                tmp = tmp + i
+            else:
+                if tmp != '':
+                    number.append(tmp)
+                tmp = ''
+
+        if number.__len__() == 5:
+            long = str(3)
+        elif number.__len__() == 4:
+            long = str(2)
+        else:
+            long = str(1)
+
+        if number != []:
+            start_week = number[-2]
+            end_week = number[-1]
+
+
+
+    else:
+        number = []
+        tmp = ''
+        for i in info[1]:
+            if i.isdigit():
+                tmp = tmp + i
+            else:
+                if tmp != '':
+                    number.append(tmp)
+                tmp = ''
+        # length = number.__len__()
+        # if length == 3:
+        #     long = str(1)
+        # elif length = 4:
+        #     long = str(2)
+        # else:
+        #     long = str(3)
+        # long = chr(ord(info[1][5]) - ord(info[1][3]) + 1 + ord('0'))
+        long = number[-1]
+        start_week = number[0]
+        end_week = number[1]
+
+    if info[1].find('单') != -1:
+        dsz = '1'
+    elif info[1].find('双') != -1:
+        dsz = '2'
+    else:
+        dsz = '0'
+
+    ans = {}
+    ans['xqj'] = week_day
+    ans['skjc'] = start_number
+    ans['skcd'] = long
+    ans['kcmc'] = name
+    ans['kcdd'] = position
+    ans['qszs'] = start_week
+    ans['jszs'] = end_week
+    ans['dsz'] = str(dsz)
+    ans['ls'] = ls
+    ans['append_info'] = info[6]
+
+    return ans
+
+
+def start(day):
+    if re.findall(r"第(.+?)", day):
+        return re.findall(r"第(.+?)", day)[0]
+    else:
+        return ''
+
+
+def length(day):
+    info_list = re.findall(r"第(.+?)节{第", day)
+    number = []
+    for info in info_list:
+        for n in info.split(','):
+            number.append(n)
+    return int(number[-1]) - int(number[0]) + 1
+
+
+def start_week(day):
+    if re.findall(r"\{第(.+?)\-", day):
+        return re.findall(r"\{第(.+?)\-", day)[0]
+    else:
+        return ''
+
+
+def end_week(day):
+    if re.findall(r"\-(.+?)周", day):
+        return re.findall(r"\-(.+?)周", day)[0]
+    else:
+        return ''
+
+
+def flag(day):
+    if re.findall(r"\|(.+?)周", day):
+        f = re.findall(r"\|(.+?)周", day)[0]
+        if f == '单':
+            return 1
+        elif f == '双':
+            return 2
+    else:
+        return 0
+
+def weekday(info):
+    if '周一' in info:
+        week_day = 1
+    elif '周二' in info:
+        week_day = 2
+
+    elif '周三' in info:
+        week_day = 3
+    elif '周四' in info:
+        week_day = 4
+    elif '周五' in info:
+        week_day = 5
+    elif '周六' in info:
+        week_day = 6
+    elif '周日' in info:
+        week_day = 7
+    return week_day
+
+
+class courseSchedule_Handler:
+    def __init__(self, html):
+        self.soup = BeautifulSoup(html, 'html.parser')
+        self.table = self.soup.find('table', class_='datelist')
+
+    def handleCourse(self, html):
+        soup = self.table
+        tr_list = soup.findAll('tr')
+        course_list = []
+        for tr in tr_list:
+            course_dict = {}
+            try:
+                if 'datelisthead' not in str(tr):
+                    td_list = tr.findAll('td')
+                    info = td_list[8].find('span').contents[0]
+                    info_list = info.split(';')
+                    postion_list = td_list[9].contents[0].split(';')
+                    # if info_list.__len__() == 2 and weekday(info_list[0]) != weekday(info_list[1]):
+                    for info in info_list:
+                        course_dict = {}
+
+                        # if start_week(info)
+                        course_dict["kcmc"] = td_list[2].find('a').contents[0]
+
+                        # teacher
+                        course_dict["ls"] = td_list[5].find('a').contents[0]
+
+                        # start
+                        course_dict["skjc"] = int(start(info))
+                        # course length
+                        course_dict["skcd"] = int(length(info))
+
+                        # start week
+                        course_dict["qszs"] = int(start_week(info))
+                        # end week
+                        course_dict["jszs"] = int(end_week(info))
+                        # 单双周flag
+                        course_dict["dsz"] = flag(info)
+                        # position
+                        # course_dict["kcdd"] = parse_position(td_list[9].contents[0])
+                        course_dict["kcdd"] = postion_list[info_list.index(info)]
+                        # weekday
+                        course_dict["xqj"] = int(weekday(info))
+                        course_list.append(course_dict)
+            except:
+                pass
+
+        course_collect = []
+        add_flag = [0] * course_list.__len__()
+        for course in course_list:
+            try:
+                i = course_list.index(course)
+                for course_diff in course_list:
+                    j = course_list.index(course_diff)
+                    if (course["kcmc"] == course_diff["kcmc"] and course["xqj"] == course_diff["xqj"] and (
+                            course["qszs"] == course_diff["qszs"] or course["jszs"] == course_diff["jszs"]) and course[
+                        "skjc"] != course_diff["skjc"] and add_flag[i] == 0 and add_flag[j] == 0 and (course["skjc"] + course["skcd"] == course_diff["skjc"] or course["skjc"] == course_diff["skjc"]+course_diff["skcd"])):
+                        # 两个课程对象的start week == end week, add_flag 都置为1
+
+                        if (course["qszs"] == course_diff["qszs"] and course["jszs"] == course_diff["jszs"]):
+                            if (add_flag[i] == 0 and add_flag[j] == 0):
+                                tmp = {}
+                                add_flag[i] = add_flag[j] = 1
+                                tmp = course
+                                tmp["skcd"] = course["skcd"] + course_diff["skcd"]
+                                course_collect.append(tmp)
+                                break
+                        # 情况比较复杂, 可以借用数轴, 使用画图的方式思考问题
+                        # 其中一个的start week大, 说明一个是另一个的子集. 把start week大的那个课程对象, add_flag 置 1, 并把start week小的那个课程的start week赋值为.
+                        if (course["qszs"] > course_diff["qszs"]):
+                            course_diff["jszs"] = course["qszs"] - 1
+                            if (add_flag[i] == 0 and add_flag[j] == 0):
+                                add_flag[i] = 1
+                                tmp = course
+                                tmp["skjc"] = min(course["skjc"], course_diff["skjc"])
+                                tmp["skcd"] = course["skcd"] + course_diff["skcd"]
+                                course_collect.append(tmp)
+                                tmp = {}
+                                break
+
+                        if (course["jszs"] < course_diff["jszs"]):
+
+                            course_diff["qszs"] = course["jszs"] + 1
+                            if (add_flag[i] == 0 and add_flag[j] == 0):
+                                add_flag[i] = 1
+                                tmp = course
+                                tmp["skjc"] = min(course["skjc"], course_diff["skjc"])
+                                tmp["skcd"] = course["skcd"] + course_diff["skcd"]
+                                course_collect.append(tmp)
+                                tmp = {}
+                                break
+                        if (course["qszs"] < course_diff["qszs"]):
+                            course["jszs"] = course_diff["qszs"] - 1
+                            if (add_flag[i] == 0 and add_flag[j] == 0):
+                                add_flag[j] = 1
+                                tmp = course_diff
+                                tmp["skjc"] = min(course["skjc"], course_diff["skjc"])
+                                tmp["skcd"] = course["skcd"] + course_diff["skcd"]
+                                course_collect.append(tmp)
+                                tmp = {}
+                                break
+                        if (course["jszs"] > course_diff["jszs"]):
+                            course["qszs"] = course_diff["jszs"] + 1
+                            add_flag[j] = 1
+                            tmp = course_diff
+                            tmp["skjc"] = min(course["skjc"], course_diff["skjc"])
+                            tmp["skcd"] = course["skcd"] + course_diff["skcd"]
+                            course_collect.append(tmp)
+                            tmp = {}
+                            break
+                if (add_flag[i] == 0):
+                    course_collect.append(course)
+                    add_flag[i] == 1
+            except:
+                pass
+            #     print(course)
+
+        # 减少由于bug导致的异常
+
+        # for course in course_collect:
+        #     i = course_list.index(course)
+        #     if (add_flag[i] == 0):
+        #         course_collect.append(course)
+        for course in course_collect:
+            if (course["skcd"] > 4):
+                course["skcd"] = 4
+        return course_collect
+
+    def writeToFile(self):
+        soup = self.table
+        tr_list = soup.findAll('tr')
+
+        i = -1
+        course_list = []
+        for tr in tr_list:
+            if i < 1:
+                pass
+            else:
+                tr = str(tr)
+                tr = BeautifulSoup(tr, "lxml")
+
+                td_list = tr.findAll('td')
+                week_day = 0
+
+                tmp = []
+                for td in td_list:
+
+                    td = str(td)
+                    if re.match('<td>第\d{1,2}节</td>', td) or 'style="width:1%' in td:
+                        # if td.__len__() < 70:
+                        continue
+                    week_day = week_day + 1
+                    td = td[:-5] + '<br/>' + str(week_day) + td[-5:]
+                    td = td[:-5] + '<br/>' + str(i) + td[-5:]
+
+                    if td.__len__() > 70:
+                        tmp.append(td)
+
+                for td in tmp:
+
+                    soup = BeautifulSoup(td, "lxml")
+                    string = soup.td.contents
+
+                    cnt = 0
+
+                    info = [""] * 7
+
+                    for x in string:
+                        x = str(x)
+
+                        if cnt == -1:
+                            cnt = 0
+                            continue
+                        if str(x) == '<br/>':
+                            continue
+                        if '<font' in str(x):
+                            info[6] = str(x)[18:-7]
+                            continue
+
+                        info[cnt] = x
+                        cnt = cnt + 1
+                        if cnt == 4:
+                            info[4] = string[-3]
+
+                            info[5] = string[-1]
+
+                            cnt = -1
+                            try:
+                                ans = out(info)
+                            except:
+                                continue
+                            course_list.append(ans)
+
+                            for course in course_list:
+
+                                tmp2 = course
+                                # course = ast.literal_eval(course)
+                                for course_diff in course_list:
+                                    tmp = course_diff
+
+                                    # course_diff = ast.literal_eval(course_diff)
+                                    if course['kcmc'] == course_diff['kcmc'] and course['skjc'] != course_diff[
+                                        'skjc'] and course['xqj'] == course_diff['xqj']:
+                                        course['skcd'] = str(int(course['skcd']) + int(course_diff['skcd']))
+                                        # new_course = json.dumps(course, ensure_ascii=False)
+                                        course_list.remove(tmp)
+                                        course_list.remove(tmp2)
+                                        course_list.append(course)
+                                    if course['xqj'] == course_diff['xqj'] and course['skjc'] == course_diff['skjc'] and \
+                                            course['kcmc'] == course_diff['kcmc']:
+                                        if course['append_info'] == "":
+                                            course['append_info'] = course_diff['append_info']
+                                        else:
+                                            course_diff['append_info'] = course['append_info']
+
+            i = i + 1
+
+        return course_list
+
+
+class info_Handler:
+
+    def __init__(self, html):
+        self.Info = {}
+        soup = BeautifulSoup(html, 'html.parser')
+        self.Info['name'] = soup.find('table', 'formlist').find_all('tr')[1].find_all('td')[1].find('span').text
+
+    def getInfo(self, Attr):
+        return self.Info[Attr]
+
+
+from decimal import *
+
+
+class score_Handler:
+    def __init__(self, html):
+        self.soup = BeautifulSoup(html, 'html.parser')
+        self.table = self.soup.find('table', class_='datelist')
+
+    def writeToFile(self, filename):
+        try:
+            grades = []
+            grade_list = []
+            grade_dict = {}
+            scores = []
+            soup = self.table
+            tr_list = soup.findAll('tr')
+            tr_list = tr_list[1:]
+            total_credit = 0
+            total = 0
+            term_total_credit = 0
+            term_total = 0
+            year_total_credit = 0
+            year_total = 0
+            tr = tr_list[-1]
+            td_list = tr.findAll('td')
+            term_year = str(td_list[0])[4:-5]
+            term_num = str(td_list[1])[4:-5]
+            grade_dict['term_year'] = term_year
+            grade_dict['term_num'] = term_num
+            getcontext().prec = 16
+            for tr in tr_list:
+                tr = str(tr)
+                tr = BeautifulSoup(tr, "lxml")
+
+                td_list = tr.findAll('td')
+                if str(td_list[0])[4:-5] == term_year:
+                    if str(td_list[1])[4:-5] == term_num:
+                        score = {}
+                        score['subject'] = str(td_list[3])[4:-5]
+                        score['property'] = str(td_list[4])[4:-5]
+                        score['credit'] = str(td_list[6])[4:-5]
+                        score['grade'] = str(td_list[8])[4:-5]
+                        score['pa'] = str(td_list[7])[7:-5]
+                        scores.append(score)
+                        term_total_credit = term_total_credit + Decimal(score['credit'])
+                        term_total = term_total + Decimal(score['pa']) * Decimal(score['credit'])
+
+                    year_total_credit = year_total_credit + Decimal(str(td_list[6])[4:-5])
+                    year_total = year_total + Decimal(str(td_list[7])[7:-5]) * Decimal(str(td_list[6])[4:-5])
+
+                total_credit = total_credit + Decimal(str(td_list[6])[4:-5])
+                total = total + Decimal(str(td_list[7])[7:-5]) * Decimal(str(td_list[6])[4:-5])
+
+            grade_dict['GPA'] = str(total / total_credit)[:4]
+            grade_dict['term_num_GPA'] = str(term_total / term_total_credit)[:4]
+            grade_dict['term_year_GPA'] = str(year_total / year_total_credit)[:4]
+            grade_list.append(grade_dict)
+            grades.append(grade_list)
+            grades.append(scores)
+        except:
+            grades = []
+        return grades
 
 
