@@ -115,6 +115,24 @@ def SchoolSpider(request):
         if xh and password:
             spider.login(xh, password)
             # spider.getScore()
+
+            for week in range(17, 19):  # 爬取17-18周
+                djz = str(week)
+                dsz = dsz_dict[str(week % 2)]
+                for day in range(1, 8):  # 周一到周末
+                    xqj = str(day)
+                    for index in sdj_dict:  # 从早到晚
+                        sdj = sdj_dict[index]
+                        kssj = xqj + djz
+                        jssj = xqj + djz
+                        # print(index)
+                        # print(kssj, jssj, xqj, sdj, dsz)
+                        html = spider.get_empty_room(kssj, jssj, xqj, sdj, dsz)
+
+
+
+
+            # spider.get_useroom()
             return render(request, 'spider/SpiderResult.html')
 
         else:
@@ -143,19 +161,19 @@ def SchoolSpider(request):
 
 
 
-
-        # for week in range(17, 19):  # 爬取17-18周
-        #     djz = str(week)
-        #     dsz = dsz_dict[str(week % 2)]
-        #     for day in range(1, 8):  # 周一到周末
-        #         xqj = str(day)
-        #         for index in sdj_dict:  # 从早到晚
-        #             sdj = sdj_dict[index]
-        #             kssj = xqj + djz
-        #             jssj = xqj + djz
-        #             # print(index)
-        #             # print(kssj, jssj, xqj, sdj, dsz)
-        #             html = spider.get_empty_room(kssj, jssj, xqj, sdj, dsz)
+# /
+#         for week in range(17, 19):  # 爬取17-18周
+#             djz = str(week)
+#             dsz = dsz_dict[str(week % 2)]
+#             for day in range(1, 8):  # 周一到周末
+#                 xqj = str(day)
+#                 for index in sdj_dict:  # 从早到晚
+#                     sdj = sdj_dict[index]
+#                     kssj = xqj + djz
+#                     jssj = xqj + djz
+#                     # print(index)
+#                     # print(kssj, jssj, xqj, sdj, dsz)
+#                     html = spider.get_empty_room(kssj, jssj, xqj, sdj, dsz)
 
     return render(request, 'spider/SchoolSpider.html')
 
