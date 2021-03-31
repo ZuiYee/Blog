@@ -9,7 +9,7 @@ django-imagekit==4.0.2
 future==0.17.1
 idna==2.8
 itchat==1.2.32
-lxml==4.2.5
+lxml==4.6.3
 numpy==1.15.4
 patterns==0.3
 pilkit==2.0
